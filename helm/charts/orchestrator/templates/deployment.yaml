@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "orchestrator.fullname" . }}
-  namespace: {{ include ".Values.global.orchestrator.data.DP_INTEGRATION_NAMESPACE" . }}
+  namespace: {{ include ".Values.global.orchestrator.data.namespace" . }}
   labels:
     {{- include "orchestrator.labels" . | nindent 4 }}
 spec:
@@ -37,7 +37,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           #image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          image: {{ include ".Values.global.orchestrator.data.DP_INTEGRATION_REGISTRY" . }}/tci/tci-orchestrator:{{ include ".Values.global.orchestrator.data.BUILD_NUMBER" . }}
+          image: {{ include ".Values.global.orchestrator.image.registry" . }}/tci/tci-orchestrator:{{ include ".Values.global.orchestrator.image.tag" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: configs

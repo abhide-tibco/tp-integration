@@ -5,13 +5,12 @@
 global:
   orchestrator:
     data:
-      DP_INTEGRATION_DEFAULT_SA: "dp-integration-default"
-      DP_INTEGRATION_VOLUME_CLAIM: tp-integration-provider-store
-      DP_INTEGRATION_REGISTRY: "reldocker.tibco.com"
-      DP_INTEGRATION_LOGGING_DOCKER_IMAGE_TAG: "1.9.4"
-      DP_INTEGRATION_NAMESPACE: "dp-integration-default"
+      namespace: "dp-integration-default"
       DP_INTEGRATION_VOLUME_PATH: "/data/"
-      BUILD_NUMBER: ""
+    image:
+      registry: ""
+      tag: ""
+      fluentbit-tag: "1.9.4"
 
 replicaCount: 1
 

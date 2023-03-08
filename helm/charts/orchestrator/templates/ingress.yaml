@@ -11,7 +11,7 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "orchestrator.labels" . | nindent 4 }}
-  namespace: {{ include ".Values.global.orchestrator.data.DP_INTEGRATION_NAMESPACE" . }}
+  namespace: {{ include ".Values.global.orchestrator.data.namespace" . }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

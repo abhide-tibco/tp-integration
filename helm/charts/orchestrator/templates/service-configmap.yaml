@@ -7,7 +7,7 @@ metadata:
   labels:
     {{- include "tp-integration.orchestrator-service.labels" . | nindent 4 }}
   name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-  namespace: {{ include ".Values.global.orchestrator.data.DP_INTEGRATION_NAMESPACE" . }}
+  namespace: {{ include ".Values.global.orchestrator.data.namespace" . }}
 data:
   {{- range $filename, $content :=  .Values.config }}
   {{- if $content }}

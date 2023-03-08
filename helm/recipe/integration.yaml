@@ -1,0 +1,26 @@
+helmCharts:
+  - name: tp-integration
+    namespace: ${NAMESPACE}
+    repository:
+      git:
+        host: https://github.com/sasahoo-tibco/tp-integration.git
+        path: /helm/charts/orchestrator
+        branch: ${BRANCH}
+    values:
+      - content: |
+          serviceAccount:
+            name: dp-integration-default
+          config:
+            DP_INTERNAL_URL: ""
+          global:
+            orchestrator:
+              data:
+                namspace: ${NAMESPACE}
+              image:
+                registry: 221795694283.dkr.ecr.us-east-1.amazonaws.com
+                tag: ""
+    flags:
+      install: true
+      createNamespace: true
+      dependencyUpdate: true
+

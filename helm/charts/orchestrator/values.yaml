@@ -135,7 +135,7 @@ extraInitContainers: []
 #   command: ['echo', "hey"]
 
 config:
-  integration.config1: ""
+  DP_INTERNAL_URL: ""
 
 volumes:
   orchestrator:

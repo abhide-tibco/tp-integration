@@ -19,6 +19,16 @@ helmCharts:
               image:
                 registry: 221795694283.dkr.ecr.us-east-1.amazonaws.com
                 tag: ""
+          volumes:
+            orchestrator:
+              persistentVolumeClaim:
+                create: false
+              storageClassName: ""
+                resources:
+                  requests:
+                    storage: 2Gi
+                volumeName:
+              existingClaim: ""
     flags:
       install: true
       createNamespace: true

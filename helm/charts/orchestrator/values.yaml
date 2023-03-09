@@ -6,7 +6,6 @@ global:
   orchestrator:
     data:
       namespace: "dp-integration-default"
-      DP_INTEGRATION_VOLUME_PATH: "/data/"
     image:
       registry: ""
       tag: ""
@@ -142,15 +141,15 @@ volumes:
       # -- If `true`, then a `PersistentVolumeClaim` (PVC) is created.
       create: false
 
-      # -- Specifies the name of the `StorageClass` that to use for the `volumes.troubleshooting` PVC.
+      # -- Specifies the name of the `StorageClass`
       storageClassName: ""
 
-      # -- Specifies the standard K8s resource requests and/or limits for the `volumes.troubleshooting` PVC.
+      # -- Specifies the standard K8s resource requests and/or limits
       resources:
         requests:
           storage: 2Gi
 
-      # -- Specifies the name of the persistent volume to use for the `volumes.troubleshooting` PVC.
+      # -- Specifies the name of the persistent volume
       volumeName:
 
     # -- When `persistentVolumeClaim.create` is `false`, then use this value to define an already-existing PVC.

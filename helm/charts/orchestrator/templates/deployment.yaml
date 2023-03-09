@@ -41,7 +41,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: configs
-              mountPath: {{ include ".Values.global.orchestrator.data.DP_INTEGRATION_VOLUME_PATH" . }}
+              mountPath: {{ include ".Values.global.orchestrator.data.volumePath" . }}
           livenessProbe:
             httpGet:
               scheme: HTTP
@@ -75,5 +75,4 @@ spec:
       volumes:
         - name: configs
           persistentVolumeClaim:
-#            claimName: {{ include ".Values.global.orchestrator.data.DP_INTEGRATION_VOLUME_CLAIM" .  }}
             claimName: {{ include "orchestrator.storage.pvc.name" . }}

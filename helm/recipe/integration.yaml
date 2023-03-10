@@ -17,8 +17,8 @@ helmCharts:
               data:
                 namspace: ${NAMESPACE}
               image:
-                registry: 221795694283.dkr.ecr.us-east-1.amazonaws.com
-                tag: ""
+                registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
+                tag: 2557-dp-integration
           volumes:
             orchestrator:
               persistentVolumeClaim:

@@ -5,11 +5,10 @@
 global:
   orchestrator:
     data:
-      namespace: "dp-integration-default"
+      namespace: dp-integration-default
     image:
-      registry: ""
-      tag: ""
-      fluentbit-tag: "1.9.4"
+      registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
+      tag: 2557-dp-integration
     deploymanager:
       image:
         enabled: false

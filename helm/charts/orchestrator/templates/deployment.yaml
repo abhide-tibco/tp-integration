@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "orchestrator.fullname" . }}
-  namespace: {{ include ".Values.global.orchestrator.data.namespace" . }}
+  namespace: {{ .Values.global.orchestrator.data.namespace }}
   labels:
     {{- include "orchestrator.labels" . | nindent 4 }}
 spec:
@@ -39,11 +39,11 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           #image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          image: {{ include ".Values.global.orchestrator.image.registry" . }}/tci/tci-orchestrator:{{ include ".Values.global.orchestrator.image.tag" . }}
+          image: {{ .Values.global.orchestrator.image.registry }}/tci/tci-orchestrator:{{ .Values.global.orchestrator.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: data
-              mountPath: {{ include ".Values.global.orchestrator.data.volumePath" . }}
+              mountPath: {{ .Values.volumes.orchestrator.volumePath }}
           livenessProbe:
             httpGet:
               scheme: HTTP
@@ -63,7 +63,7 @@ spec:
                   key: DP_INTERNAL_URL
         {{- if .Values.global.orchestrator.deploymanager.enabled }}
         - name: deploymanager
-          image: {{ include ".Values.global.orchestrator.deploymanager.image.registry" . }}/tci/tci-app-proxy:{{ include ".Values.global.orchestrator.deploymanager.image.tag" . }}
+          image: {{ .Values.global.orchestrator.deploymanager.image.registry }}/tci/tci-app-proxy:{{ .Values.global.orchestrator.deploymanager.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
             {{- toYaml .Values.global.orchestrator.deploymanager.resources | nindent 12 }}
@@ -178,5 +178,5 @@ spec:
             path: /var/log/pods
         - name: fluent-bit-config
           configMap:
-            name: {{ include "cic-tenant-tci-orchestrator.consts.fluentConf" . }}
+            name: {{ include "orchestrator.fluentConf" . }}
         {{- end }}

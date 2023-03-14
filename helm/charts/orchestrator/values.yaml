@@ -149,12 +149,13 @@ config:
 
 volumes:
   orchestrator:
+    volumePath: "/data/"
     persistentVolumeClaim:
       # -- If `true`, then a `PersistentVolumeClaim` (PVC) is created.
-      create: false
+      create: true
 
       # -- Specifies the name of the `StorageClass`
-      storageClassName: ""
+      storageClassName: "gp2"
 
       # -- Specifies the standard K8s resource requests and/or limits
       resources:
@@ -162,7 +163,7 @@ volumes:
           storage: 2Gi
 
       # -- Specifies the name of the persistent volume
-      volumeName:
+      volumeName: "test-pvc"
 
     # -- When `persistentVolumeClaim.create` is `false`, then use this value to define an already-existing PVC.
     existingClaim: ""

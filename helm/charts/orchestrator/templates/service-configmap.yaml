@@ -3,11 +3,10 @@ kind: ConfigMap
 metadata:
   annotations:
     use-subpath: "true"
-  creationTimestamp: null
   labels:
-    {{- include "tp-integration.orchestrator-service.labels" . | nindent 4 }}
+    {{- include "orchestrator.labels" . | nindent 4 }}
   name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-  namespace: {{ include ".Values.global.orchestrator.data.namespace" . }}
+  namespace: {{ .Values.global.orchestrator.data.namespace }}
 data:
   {{- range $filename, $content :=  .Values.config }}
   {{- if $content }}

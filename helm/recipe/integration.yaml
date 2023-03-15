@@ -10,8 +10,6 @@ helmCharts:
       - content: |
           serviceAccount:
             name: dp-integration-default
-          config:
-            DP_INTERNAL_URL: ""
           global:
             orchestrator:
               data:
@@ -29,6 +27,8 @@ helmCharts:
                     storage: 2Gi
                 volumeName:
               existingClaim: ""
+          config:
+            DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
     flags:
       install: true
       createNamespace: true

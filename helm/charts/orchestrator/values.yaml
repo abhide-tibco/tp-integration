@@ -59,7 +59,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 7810
+  targetPort: 7810
 
 ingress:
   enabled: false
@@ -145,7 +146,7 @@ extraInitContainers: []
 #   command: ['echo', "hey"]
 
 config:
-  DP_INTERNAL_URL: ""
+  DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
 
 volumes:
   orchestrator:

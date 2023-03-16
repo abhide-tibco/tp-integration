@@ -59,11 +59,15 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
-            - name: DP_INTERNAL_URL
+            {{- range $filename, $content :=  .Values.config }}
+            {{- if $content }}
+            - name: {{ $filename }}
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-                  key: DP_INTERNAL_URL
+                  key: {{ $filename }}
+            {{- end }}
+            {{- end }}
         {{- if .Values.global.orchestrator.deploymanager.enabled }}
         - name: deploymanager
           image: {{ .Values.global.orchestrator.deploymanager.image.registry }}/tci/tci-app-proxy:{{ .Values.global.orchestrator.deploymanager.image.tag }}

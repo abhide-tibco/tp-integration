@@ -1,9 +1,9 @@
-# Default values for buildserver.
+# Default values for flogobuildserver.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 global:
-  buildserver:
+  flogobuildserver:
     data:
       namespace: dp-integration-default
     image:
@@ -19,7 +19,7 @@ global:
 replicaCount: 1
 
 image:
-  repository: tci/buildserver
+  repository: tci/flogobuildserver
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -52,8 +52,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 7811
-  targetPort: 7811
+  port: 7812
+  targetPort: 7812
 
 #ingress:
 #  enabled: false
@@ -75,7 +75,7 @@ ingress:
   hosts:
     - host: ""
       paths:
-        - path: /tibco/agent/integration/buildserver/
+        - path: /tibco/agent/integration/flogobuildserver/
           pathType: Prefix
   # -- Annotations for the ingress object. See documentation for your ingress controller for valid annotations.
   annotations: {}
@@ -113,7 +113,7 @@ config:
   DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
 
 volumes:
-  buildserver:
+  flogobuildserver:
     volumePath: "/data/"
     persistentVolumeClaim:
       # -- If `true`, then a `PersistentVolumeClaim` (PVC) is created.

@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "buildserver.fullname" . }}
+  name: {{ include "bwbuildserver.fullname" . }}
   labels:
-    {{- include "buildserver.labels" . | nindent 4 }}
+    {{- include "bwbuildserver.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "buildserver.selectorLabels" . | nindent 6 }}
+      {{- include "bwbuildserver.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "buildserver.selectorLabels" . | nindent 8 }}
+        {{- include "bwbuildserver.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "buildserver.serviceAccountName" . }}
+      serviceAccountName: {{ include "bwbuildserver.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -32,11 +32,11 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
 #          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          image: {{ .Values.global.buildserver.image.registry }}/tci/tci-buildserver:{{ .Values.global.buildserver.image.tag }}
+          image: {{ .Values.global.bwbuildserver.image.registry }}/tci/tci-bwbuildserver:{{ .Values.global.bwbuildserver.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: data
-              mountPath: {{ .Values.volumes.buildserver.volumePath }}
+              mountPath: {{ .Values.volumes.bwbuildserver.volumePath }}
           livenessProbe:
             httpGet:
               scheme: HTTP
@@ -58,12 +58,12 @@ spec:
                   key: {{ $filename }}
             {{- end }}
             {{- end }}
-        {{- if .Values.global.buildserver.logging.enabled }}
+        {{- if .Values.global.bwbuildserver.logging.enabled }}
         - name: fluent-bit
-          image: {{ .Values.global.buildserver.logging.image.registry }}/tci/fluent-bit:{{ .Values.global.buildserver.logging.image.registry.tag }}
+          image: {{ .Values.global.bwbuildserver.logging.image.registry }}/tci/fluent-bit:{{ .Values.global.bwbuildserver.logging.image.registry.tag }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           resources:
-            {{- toYaml .Values.global.buildserver.deploymanager.resources | nindent 12 }}
+            {{- toYaml .Values.global.bwbuildserver.deploymanager.resources | nindent 12 }}
           securityContext:
             privileged: true
           ports:
@@ -143,8 +143,8 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ include "buildserver.storage.pvc.name" . }}
-        {{- if .Values.global.buildserver.logging.enabled }}
+            claimName: {{ include "bwbuildserver.storage.pvc.name" . }}
+        {{- if .Values.global.bwbuildserver.logging.enabled }}
         - name: dockercontainerlogs
             hostPath:
               path: /var/lib/docker/containers/
@@ -153,5 +153,5 @@ spec:
             path: /var/log/pods
         - name: fluent-bit-config
           configMap:
-            name: {{ include "buildserver.fluentConf" . }}
+            name: {{ include "bwbuildserver.fluentConf" . }}
         {{- end }}

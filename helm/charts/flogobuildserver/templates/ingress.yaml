@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-  {{- $fullName := include "buildserver.fullname" . -}}
+  {{- $fullName := include "flogobuildserver.fullname" . -}}
   {{- $releaseName := .Release.Name -}}
   {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
@@ -18,7 +18,7 @@ metadata:
   name: {{ $fullName }}
   labels:
     app.kubernetes.io/component: load-balancer
-    {{- include "buildserver.labels" . | nindent 4 }}
+    {{- include "flogobuildserver.labels" . | nindent 4 }}
   annotations:
     {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 4 }}

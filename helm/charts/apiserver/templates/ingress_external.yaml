@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "bwbuildserver.fullname" . -}}
+{{- $fullName := include "apiserver.fullname" . -}}
 {{- $releaseName := .Release.Name -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
@@ -15,10 +15,10 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-external
   labels:
     app.kubernetes.io/component: load-balancer
-    {{- include "bwbuildserver.labels" . | nindent 4 }}
+    {{- include "apiserver.labels" . | nindent 4 }}
   annotations:
     {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 4 }}

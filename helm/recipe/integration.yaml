@@ -1,5 +1,5 @@
 helmCharts:
-  - name: tp-integration
+  - name: orchestrator
     namespace: ${NAMESPACE}
     repository:
       git:
@@ -17,16 +17,33 @@ helmCharts:
               image:
                 registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
                 tag: 2557-dp-integration
+          ingress:
+            annotations:
+              haproxy.org/cors-enable: "true"
+              haproxy.org/load-balance: leastconn
+              haproxy.org/src-ip-header: X-Real-IP
+              haproxy.org/timeout-http-request: 600s
+              ingress.kubernetes.io/rewrite-target: /
+              meta.helm.sh/release-name: orchestrator
+              meta.helm.sh/release-namespace: ${NAMESPACE}
+            className: ${INGRESS_CLASS}
+            enabled: true
+            hosts:
+            - host: ""
+              paths:
+              - path: /tibco/agent/integration/orchestrator/
+                pathType: Prefix
+
           volumes:
             orchestrator:
               persistentVolumeClaim:
-                create: false
-              storageClassName: ""
+                create: true
+              storageClassName: "gp2"
                 resources:
                   requests:
-                    storage: 2Gi
-                volumeName:
-              existingClaim: "pvc"
+                    storage: 8Gi
+              volumeName: ""
+              existingClaim: ""
           config:
             DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
     flags:

@@ -12,12 +12,17 @@ metadata:
     helm.sh/resource-policy: keep
 spec:
   accessModes:
-    - ReadWriteMany
+    {{- range .Values.volumes.orchestrator.persistentVolumeClaim.accessModes }}
+    - {{ . }}
+    {{- end }}
   storageClassName: {{ .Values.volumes.orchestrator.persistentVolumeClaim.storageClassName | quote }}
+  volumeMode: {{ .Values.volumes.orchestrator.persistentVolumeClaim.volumeMode }}
   {{- with .Values.volumes.orchestrator.persistentVolumeClaim.resources }}
   resources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- if .Values.volumes.orchestrator.persistentVolumeClaim.volumeName }}
   volumeName: {{ .Values.volumes.orchestrator.persistentVolumeClaim.volumeName | quote }}
+  {{- end }}
 {{- end }}
 {{- end }}

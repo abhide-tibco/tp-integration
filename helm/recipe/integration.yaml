@@ -222,10 +222,27 @@ helmCharts:
             className: ${INGRESS_CLASS}
             enabled: true
             hosts:
-            - host: "test.tci-env.ap-southeast-2.tcie.pro"
+            - host: ""
               paths:
               - path: /tibco/agent/integration/apiserver/
                 pathType: Prefix
+          ingressExternal:
+            annotations:
+              haproxy.org/cors-enable: "true"
+              haproxy.org/load-balance: leastconn
+              haproxy.org/src-ip-header: X-Real-IP
+              haproxy.org/timeout-http-request: 600s
+              ingress.kubernetes.io/rewrite-target: /
+              meta.helm.sh/release-name: apiserver
+              meta.helm.sh/release-namespace: ${NAMESPACE}
+            className: ${INGRESS_CLASS}
+            enabled: true
+            hosts:
+            - host: "test.tci-env.ap-southeast-2.tcie.pro"
+              paths:
+              - path: /
+                pathType: Prefix
+
           config:
             DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
     flags:

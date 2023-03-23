@@ -1,3 +1,5 @@
+{{- $releaseName := .Release.Name -}}
+{{- $chartName := .Chart.Name -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -64,7 +66,7 @@ spec:
             - name: {{ $filename }}
               valueFrom:
                 configMapKeyRef:
-                  name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
+                  name: {{ $releaseName }}-{{ $chartName }}-serviceconfig
                   key: {{ $filename }}
             {{- end }}
             {{- end }}

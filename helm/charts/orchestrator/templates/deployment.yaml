@@ -1,10 +1,9 @@
-{{- $releaseName := .Release.Name -}}
-{{- $chartName := .Chart.Name -}}
+{{- $fullName := include "orchestrator.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "orchestrator.fullname" . }}
-  namespace: {{ .Values.global.orchestrator.data.namespace }}
+#  namespace: {{ .Values.global.orchestrator.data.namespace }}
   labels:
     {{- include "orchestrator.labels" . | nindent 4 }}
 spec:
@@ -66,7 +65,7 @@ spec:
             - name: {{ $filename }}
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $releaseName }}-{{ $chartName }}-serviceconfig
+                  name: {{ $fullName }}-serviceconfig
                   key: {{ $filename }}
             {{- end }}
             {{- end }}

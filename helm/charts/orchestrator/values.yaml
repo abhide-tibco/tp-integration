@@ -7,7 +7,8 @@ global:
     data:
       namespace: dp-integration-default
     image:
-      registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
+      #664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
+      registry: reldocker.tibco.com
       tag: 2557-dp-integration
     deploymanager:
       image:
@@ -59,8 +60,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 7810
-  targetPort: 7810
+  port: 7813
+  targetPort: 7813
 
 #ingress:
 #  enabled: false
@@ -172,7 +173,9 @@ volumes:
       create: true
 
       # -- Specifies the name of the `StorageClass`
-      storageClassName: "gp2"
+      # in case of kind use "standard"
+      # in case of EKS "gp2"
+      storageClassName: "standard"
 
       # -- Specifies the standard K8s resource requests and/or limits
       resources:

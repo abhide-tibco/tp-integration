@@ -5,8 +5,8 @@ metadata:
     use-subpath: "true"
   labels:
     {{- include "orchestrator.labels" . | nindent 4 }}
-  name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-  namespace: {{ .Values.global.orchestrator.data.namespace }}
+  name: {{ include "orchestrator.fullname" . }}-serviceconfig
+#  namespace: {{ .Values.global.orchestrator.data.namespace }}
 data:
   {{- range $filename, $content :=  .Values.config }}
   {{- if $content }}

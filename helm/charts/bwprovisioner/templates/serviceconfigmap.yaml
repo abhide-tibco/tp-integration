@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    {{- include "bwprovisioner.labels" . | nindent 4 }}
+  name: {{ include "bwprovisioner.fullname" . }}-serviceconfig
+#  namespace: {{ .Values.global.bwprovisioner.data.namespace }}
+data:
+  {{- range $filename, $content :=  .Values.config }}
+  {{- if $content }}
+  {{ $filename }}: {{ tpl $content $ | quote }}
+  {{- end }}
+  {{- end }}

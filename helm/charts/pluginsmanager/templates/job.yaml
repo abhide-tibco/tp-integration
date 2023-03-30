@@ -30,13 +30,13 @@ spec:
       containers:
       {{- range $name, $plugin := .Values.plugins }}
       - name: {{ $name }}-image-extraction
-        image: {{ $.Values.global.pluginsmanager.data.DOCKER_REGISTRY }}/stratosphere/container-image-extractor
+        image: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/stratosphere/container-image-extractor
         imagePullPolicy: Always
         env:
         - name: SOURCE_REGISTRY
-          value: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}
+          value: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci
         - name: SOURCE_DOCKER_IMAGE
-          value: "{{ $.Values.global.pluginsmanager.data.DOCKER_REGISTRY }}/tci/{{ $name }}:{{ $plugin.tag }}"   # docker image from which contents to be copied
+          value: "{{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci/{{ $name }}:{{ $plugin.tag }}"   # docker image from which contents to be copied
         - name: IMAGE_TEMP_DIR
           value: "/opt/tmp/{{ $name }}/"                                         # temporary directory to be used by container-image-extractor for downloading and extracting docker image
         - name: SOURCE_DIRS
@@ -52,5 +52,10 @@ spec:
       volumes:
         - name: shared-vol
           persistentVolumeClaim:
-            claimName: "test-cp-integration-fs-store-claim"
+            {{- if .Values.volumes.pluginsmanager.persistentVolumeClaim.create }}
+            claimName: {{ include "pluginsmanager.storage.pvc.name" . }}
+            {{- else }}
+            claimName: {{ .Values.volumes.pluginsmanager.existingClaim }}
+            {{- end }}
+
 {{- end }}

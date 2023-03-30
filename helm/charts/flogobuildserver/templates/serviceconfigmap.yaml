@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "flogobuildserver.labels" . | nindent 4 }}
   name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-  namespace: {{ .Values.global.flogobuildserver.data.namespace }}
 data:
   {{- range $filename, $content :=  .Values.config }}
   {{- if $content }}

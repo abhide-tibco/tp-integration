@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "flogoprovisioner.fullname" . }}
-#  namespace: {{ .Values.global.flogoprovisioner.data.namespace }}
   labels:
     {{- include "flogoprovisioner.labels" . | nindent 4 }}
 spec:

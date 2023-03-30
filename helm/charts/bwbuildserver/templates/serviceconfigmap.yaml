@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "bwbuildserver.labels" . | nindent 4 }}
   name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-  namespace: {{ .Values.global.bwbuildserver.data.namespace }}
 data:
   {{- range $filename, $content :=  .Values.config }}
   {{- if $content }}

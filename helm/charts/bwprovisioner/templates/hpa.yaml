@@ -3,7 +3,6 @@ apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "bwprovisioner.fullname" . }}
-#  namespace: {{ .Values.global.bwprovisioner.data.namespace }}
   labels:
     {{- include "bwprovisioner.labels" . | nindent 4 }}
 spec:

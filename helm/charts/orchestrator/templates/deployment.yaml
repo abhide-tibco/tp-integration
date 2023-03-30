@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "orchestrator.fullname" . }}
-#  namespace: {{ .Values.global.orchestrator.data.namespace }}
   labels:
     {{- include "orchestrator.labels" . | nindent 4 }}
 spec:

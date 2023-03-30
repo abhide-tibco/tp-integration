@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "apiserver.labels" . | nindent 4 }}
   name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-  namespace: {{ .Values.global.apiserver.data.namespace }}
 data:
   {{- range $filename, $content :=  .Values.config }}
   {{- if $content }}

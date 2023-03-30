@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "orchestrator.labels" . | nindent 4 }}
   name: {{ include "orchestrator.fullname" . }}-serviceconfig
-#  namespace: {{ .Values.global.orchestrator.data.namespace }}
 data:
   {{- range $filename, $content :=  .Values.config }}
   {{- if $content }}

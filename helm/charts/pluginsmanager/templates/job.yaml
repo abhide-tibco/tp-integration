@@ -1,4 +1,4 @@
-{{- if eq .Values.global.pluginsmanager.data.operation "extract" }}
+{{- if eq .Values.global.pluginsmanager.data.operation "upload" }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -30,27 +30,27 @@ spec:
       containers:
       {{- range $name, $plugin := .Values.plugins }}
       - name: {{ $name }}-image-extraction
-        image: {{ $.Values.global.cic.data.SYSTEM_DOCKER_REGISTRY }}/stratosphere/container-image-extractor
+        image: {{ $.Values.global.pluginsmanager.data.DOCKER_REGISTRY }}/stratosphere/container-image-extractor
         imagePullPolicy: Always
         env:
-          - name: SOURCE_REGISTRY
-            value: {{ .Values.global.pluginsmanager.data.SOURCE_REGISTRY }}
-          - name: SOURCE_DOCKER_IMAGE
-            value: "{{ $.Values.global.pluginsmanager.data.DOCKER_REGISTRY }}/tci/{{ $name }}:{{ $plugin.tag }}"   # docker image from which contents to be copied
-          - name: IMAGE_TEMP_DIR
-            value: "/opt/tmp/{{ $name }}/"                          # temporary directory to be used by container-image-extractor for downloading and extracting docker image
-          - name: SOURCE_DIRS
-            value: "/opt/tibco/bw-contribution/"                    # list of comma separated locations in SOURCE_DOCKER_IMAGE which needs to be copied to TARGET_DIRS
-          - name: TARGET_DIRS
-            value: "/efs/bw-contribution"                           # list of comma separated target locations corresponding to SOURCE_DIRS
-          - name: LOG_LEVEL
-            value: debug                                            # log level for kaniko warmer
-         volumeMounts:
-            - mountPath: /efs                                       # mounted volume to be used
-              name: shared-vol
+        - name: SOURCE_REGISTRY
+          value: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}
+        - name: SOURCE_DOCKER_IMAGE
+          value: "{{ $.Values.global.pluginsmanager.data.DOCKER_REGISTRY }}/tci/{{ $name }}:{{ $plugin.tag }}"   # docker image from which contents to be copied
+        - name: IMAGE_TEMP_DIR
+          value: "/opt/tmp/{{ $name }}/"                                         # temporary directory to be used by container-image-extractor for downloading and extracting docker image
+        - name: SOURCE_DIRS
+          value: "/opt/tibco/bw-contribution/"                         # list of comma separated locations in SOURCE_DOCKER_IMAGE which needs to be copied to TARGET_DIRS
+        - name: TARGET_DIRS
+          value: "/efs/bw-contribution"                            # list of comma separated target locations corresponding to SOURCE_DIRS
+        - name: LOG_LEVEL
+          value: debug                                              # log level for kaniko warmer
+        volumeMounts:
+        - mountPath: /efs                                           # mounted volume to be used
+          name: shared-vol
       {{- end }}
       volumes:
         - name: shared-vol
           persistentVolumeClaim:
-            claimName: {{ include "pluginsmanager.storage.pvc.name" . }}
+            claimName: "test-cp-integration-fs-store-claim"
 {{- end }}

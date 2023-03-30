@@ -69,7 +69,7 @@ service:
 #  #      - chart-example.local
 
 ingress:
-  # -- Enables configuration of ingress to expose Spotfire Server. Requires ingress support in the Kubernetes cluster.
+  # -- Enables configuration of ingress to expose flogobuildserver. Requires ingress support in the Kubernetes cluster.
   enabled: false
   ingressClassName: haproxy-dp-dp1
   hosts:

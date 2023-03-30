@@ -70,7 +70,7 @@ config:
   DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
 
 ingress:
-  # -- Enables configuration of ingress to expose Spotfire Server. Requires ingress support in the Kubernetes cluster.
+  # -- Enables configuration of ingress to expose apiserver. Requires ingress support in the Kubernetes cluster.
   enabled: false
   ingressClassName: haproxy-dp-dp1
   hosts:
@@ -86,7 +86,7 @@ ingress:
   #      - chart-example.local
 
  ingressExternal:
-    # -- Enables configuration of ingress to expose Spotfire Server. Requires ingress support in the Kubernetes cluster.
+    # -- Enables configuration of ingress to expose apiserver. Requires ingress support in the Kubernetes cluster.
    enabled: false
    ingressClassName: traefik
    hosts:

@@ -36,17 +36,17 @@ spec:
         - name: SOURCE_REGISTRY
           value: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci
         - name: SOURCE_DOCKER_IMAGE
-          value: "{{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci/{{ $name }}:{{ $plugin.tag }}"   # docker image from which contents to be copied
+          value: "{{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci/{{ $name }}:{{ $plugin.tag }}"
         - name: IMAGE_TEMP_DIR
-          value: "/opt/tmp/{{ $name }}/"                                         # temporary directory to be used by container-image-extractor for downloading and extracting docker image
+          value: "/opt/tmp/{{ $name }}/"
         - name: SOURCE_DIRS
-          value: "/opt/tibco/bw-contribution/"                         # list of comma separated locations in SOURCE_DOCKER_IMAGE which needs to be copied to TARGET_DIRS
+          value: "/opt/tibco/bw-contribution/"
         - name: TARGET_DIRS
-          value: "/efs/bw-contribution"                            # list of comma separated target locations corresponding to SOURCE_DIRS
+          value: "/efs/bw-contribution"
         - name: LOG_LEVEL
-          value: debug                                              # log level for kaniko warmer
+          value: debug
         volumeMounts:
-        - mountPath: /efs                                           # mounted volume to be used
+        - mountPath: /efs
           name: shared-vol
       {{- end }}
       volumes:

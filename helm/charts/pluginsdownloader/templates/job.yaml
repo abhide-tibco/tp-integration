@@ -30,7 +30,7 @@ spec:
       containers:
       {{- range $name, $plugin := .Values.plugins }}
       - name: {{ $name }}-image-downloader
-        image: nginx
+        image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
         imagePullPolicy: Always
         command:
           - "bin/bash"

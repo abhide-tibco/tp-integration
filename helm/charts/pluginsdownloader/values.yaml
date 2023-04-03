@@ -10,10 +10,10 @@ global:
       operation: "download"
       SOURCE_REGISTRY: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
 image:
-  repository: ""
+  repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""

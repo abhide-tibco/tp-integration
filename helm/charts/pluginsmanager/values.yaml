@@ -87,12 +87,18 @@ plugins:
 #    tag: 6.0.0.v8.1-tci-2.0
 #  tci-bw-plugin-sharepoint:
 #    tag: 6.4.0.v7-tci-2.0
-  tci-bw-plugin-googlepubsub:
-    tag: 6.0.2.v6-tci-2.0
+#  tci-bw-plugin-googlepubsub:
+#    tags:
+#       - 6.0.2.v6-tci-2.0
+#    default: 6.0.2.v6-tci-2.0
   tci-bw-plugin-sqs:
-    tag: 6.5.2.v17-tci-2.0
+    tags:
+       - 6.5.2.v5.1-tci-2.0
+       - 6.5.2.v17-tci-2.0
+    default: 6.5.2.v17-tci-2.0
 #  tci-bw-plugin-smpp:
-#    tag: 6.0.3.v5-tci-2.0
+#    tag:
+#      - 6.0.3.v5-tci-2.0
 #  tci-bw-plugin-odata:
 #    tag: 6.5.0.v7-tci-2.0
 #  tci-bw-plugin-oerp:
@@ -120,6 +126,7 @@ networkpolicy:
 volumes:
   pluginsmanager:
     volumePath: "/data/"
+    mountPath: /usr/share/nginx/html
     persistentVolumeClaim:
       # -- If `true`, then a `PersistentVolumeClaim` (PVC) is created.
       create: false

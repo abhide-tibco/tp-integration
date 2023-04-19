@@ -29,25 +29,43 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
       {{- range $name, $plugin := .Values.plugins }}
-      - name: {{ $name }}-image-extraction
-        image: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/stratosphere/container-image-extractor
-        imagePullPolicy: Always
-        env:
-        - name: SOURCE_REGISTRY
-          value: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci
-        - name: SOURCE_DOCKER_IMAGE
-          value: "{{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci/{{ $name }}:{{ $plugin.tag }}"
-        - name: IMAGE_TEMP_DIR
-          value: "/opt/tmp/{{ $name }}/"
-        - name: SOURCE_DIRS
-          value: "/opt/tibco/bw-contribution/"
-        - name: TARGET_DIRS
-          value: "/efs/bw-contribution"
-        - name: LOG_LEVEL
-          value: debug
-        volumeMounts:
-        - mountPath: /efs
-          name: shared-vol
+        {{- range $tag := $plugin.tags }}
+        - name: {{ $name }}-{{ $tag | replace "." "-" }}-image-extraction
+          image: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/stratosphere/container-image-extractor
+          imagePullPolicy: Always
+          env:
+          - name: SOURCE_REGISTRY
+            value: {{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci
+          - name: SOURCE_DOCKER_IMAGE
+            value: "{{ $.Values.global.pluginsmanager.data.SOURCE_REGISTRY }}/tci/{{ $name }}:{{ $tag }}"
+          - name: IMAGE_TEMP_DIR
+            value: "/opt/tmp/{{ $name }}-{{ $tag }}/"
+          - name: SOURCE_DIRS
+            value: "/opt/tibco/bw-contribution/"
+          - name: TARGET_DIRS
+            value: "{{ $.Values.volumes.pluginsmanager.mountPath }}/bw-contribution/{{ $name }}/{{ $tag }}"
+          - name: LOG_LEVEL
+            value: debug
+          volumeMounts:
+          - mountPath: {{ $.Values.volumes.pluginsmanager.mountPath }}
+            name: shared-vol
+        - name: {{ $name }}-{{ $tag | replace "." "-" }}-default
+          image: nginx
+          command:
+            - "bin/bash"
+            - "-c"
+            - |
+              tag={{ $plugin.default }}
+              pluginName={{ $name }}
+              echo "tag:"$tag
+              echo "pluginName:"$pluginName
+              echo {{ $.Values.volumes.pluginsmanager.mountPath }}
+              path={{ $.Values.volumes.pluginsmanager.mountPath }}/bw-contribution/$pluginName/default.ver
+              echo $tag > $path
+          volumeMounts:
+            - name: shared-vol
+              mountPath: {{ $.Values.volumes.pluginsmanager.mountPath }}
+        {{- end }}
       {{- end }}
       volumes:
         - name: shared-vol

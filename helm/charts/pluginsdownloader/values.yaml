@@ -89,6 +89,8 @@ plugins:
 #    tag: 6.4.0.v7-tci-2.0
   tci-bw-plugin-googlepubsub:
     tag: 6.0.2.v6-tci-2.0
+  tci-bw-plugin-sqs:
+    tag: 6.5.2.v17-tci-2.0
 #  tci-bw-plugin-sqs:
 #    tag: 6.5.2.v17-tci-2.0
 #  tci-bw-plugin-smpp:

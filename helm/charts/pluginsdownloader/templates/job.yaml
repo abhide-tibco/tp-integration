@@ -30,7 +30,7 @@ spec:
       containers:
       {{- range $name, $plugin := .Values.plugins }}
       - name: {{ $name }}-image-downloader
-        image: {{ .Values.images.repository }}:{{ .Values.images.tag }}
+        image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
         imagePullPolicy: Always
         command:
           - "bin/bash"
@@ -48,8 +48,9 @@ spec:
             echo "tag:"$tag
             plugin=$(echo $pluginName | sed -e "s/${sub}/${replace}/g")
             echo $plugin
-            dir="/efs/bw-contribution/$plugin"
-            dirs="/efs/bw-contribution/$plugin/"
+            #dir="/efs/bw-contribution/$plugin"
+            dir="/efs/bw-contribution/$pluginName/$tag/$plugin"
+            #dirs="/efs/bw-contribution/$plugin/"
             echo "dir:"$dir
             for entry in "$dir"/*
             do
@@ -60,7 +61,7 @@ spec:
                  echo "entry:""$entry"
                  filename=$(basename -- "$file")
                  extension="${filename##*.}"
-                 fileName="${filename%.*}"
+                 fileName="${filename%.*}"".zip"
                  reqUrl="$DP_URL/tibco/agent/integration/orchestrator/v1/artifacts?pluginName=$plugin&tag=$tag&fileName=$fileName&contribName=contribution.json"
                  echo "reqUrl:"$reqUrl
                  curl -v -F "file=@$entry;type=application/zip" -F "contrib=@$dir/contribution.json"  $reqUrl

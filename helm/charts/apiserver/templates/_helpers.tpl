@@ -48,6 +48,10 @@ Selector labels
 {{- define "apiserver.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "apiserver.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+dp.integration.app/type: "service"
+dp.integration.app/name: "apiserver"
+dp.integration.app/instanceid: {{ .Values.instanceId }}
+dp.integration.app/dpid: {{ .Values.dataplaneId }}
 {{- end }}
 
 {{/*

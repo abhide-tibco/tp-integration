@@ -17,6 +17,9 @@ global:
 
 replicaCount: 1
 
+instanceId: default
+dataplaneId: default
+
 image:
   repository: tci/apiserver
   pullPolicy: IfNotPresent

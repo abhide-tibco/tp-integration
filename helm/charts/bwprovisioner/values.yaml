@@ -25,6 +25,9 @@ global:
 
 replicaCount: 1
 
+instanceId: default
+dataplaneId: default
+
 image:
   repository: tci/tci-bwprovisioner
   pullPolicy: IfNotPresent

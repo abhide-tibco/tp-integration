@@ -31,8 +31,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-#         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          image: {{ .Values.global.apiserver.image.registry }}/tci/tci-apiserver:{{ .Values.global.apiserver.image.tag }}
+          image: {{ .Values.global.apiserver.image.registry }}/piap/api-server:{{ .Values.global.apiserver.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           livenessProbe:
             httpGet:

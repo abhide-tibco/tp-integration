@@ -41,8 +41,7 @@ spec:
               name: server
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          #image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          image: {{ .Values.global.orchestrator.image.registry }}/tci/tci-orchestrator:{{ .Values.global.orchestrator.image.tag }}
+          image: {{ .Values.global.orchestrator.image.registry }}/piap/orchestrator:{{ .Values.global.orchestrator.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: data

@@ -22,17 +22,6 @@ They are used internally for better template reusability, and they include commo
 
 ## Building the charts
 
-To package all the charts in this directory, run `make` from the helm directory.
-The included `Makefile` builds each of the charts, taking care of any dependencies.
-
-```bash
-make
-```
-
-**Note**: The built charts are saved into the directory `<this-repo>/helm/packages`.
-
-### Alternative: Building the charts one by one
-
 You can package the provided charts, one by one, by following these steps from each of the provided charts directories:
 
 1. Go to the chart directory. For example:

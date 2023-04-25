@@ -4,8 +4,8 @@
 
 global:
   cp:
-    dataplaneId: default
-    instanceId: default
+    dataplaneId: defaultDpId
+    instanceId: defaultInstId
   orchestrator:
     data:
       namespace: dp-integration-default
@@ -81,13 +81,15 @@ service:
 
 ingress:
   # -- Enables configuration of ingress to expose orchestrator. Requires ingress support in the Kubernetes cluster.
-  enabled: false
-  ingressClassName: haproxy-dp-dp1
-  hosts:
-    - host: ""
-      paths:
-        - path: /tibco/agent/integration/orchestrator/
-          pathType: Prefix
+  enabled: true
+  ingressClassName: haproxy
+  hostsOverride: false
+  hosts: {}
+#  hosts:
+#    - host: ""
+#      paths:
+#        - path: /tibco/agent/integration/orchestrator/
+#          pathType: Prefix
   # -- Annotations for the ingress object. See documentation for your ingress controller for valid annotations.
   annotations: {}
   tls: []
@@ -166,7 +168,8 @@ extraInitContainers: []
 #   command: ['echo', "hey"]
 
 config:
-  DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
+  #  DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
+  DP_INTERNAL_URL: "***NOT AVAILABLE***"
 
 volumes:
   orchestrator:

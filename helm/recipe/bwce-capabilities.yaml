@@ -26,6 +26,7 @@ helmCharts:
               meta.helm.sh/release-namespace: ${NAMESPACE}
             className: ${INGRESS_CLASS}
             enabled: true
+            hostsOverride: false
             hosts:
             - host: ""
               paths:
@@ -68,6 +69,7 @@ helmCharts:
               meta.helm.sh/release-namespace: ${NAMESPACE}
             className: ${INGRESS_CLASS}
             enabled: true
+            hostsOverride: false
             hosts:
             - host: ""
               paths:
@@ -124,8 +126,9 @@ helmCharts:
               ingress.kubernetes.io/rewrite-target: /
               meta.helm.sh/release-name: apiserver
               meta.helm.sh/release-namespace: ${NAMESPACE}
-            className: ${INGRESS_CLASS}
+            className: ${INGRESS_CLASS}-ext
             enabled: true
+            hostsOverride: false
             hosts:
             - host: "test.tci-env.ap-southeast-2.tcie.pro"
               paths:

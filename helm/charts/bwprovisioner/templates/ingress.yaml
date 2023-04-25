@@ -15,7 +15,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ .Values.ingress.className }}-{{ $fullName }}-{{ .Values.global.cp.instanceId }}
   labels:
     app.kubernetes.io/component: load-balancer
     {{- include "bwprovisioner.labels" . | nindent 4 }}
@@ -25,7 +25,7 @@ metadata:
     {{- end }}
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}-{{ $fullName }}-{{ .Values.global.cp.instanceId }}
   {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
@@ -46,6 +46,15 @@ spec:
     - http:
     {{- end }}
         paths:
+          {{- if not $.Values.ingress.hostsOverride -}}
+          - path: /tibco/agent/integration/{{ $.Values.global.cp.instanceId }}/bwprovisioner/
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $.Values.service.Port }}
+          {{- end }}
           {{- range .paths }}
           - path: {{ .path }}
             {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
@@ -55,7 +64,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ .Values.service.Port }}
+                  number: {{ $.Values.service.Port }}
           {{- end }}
   {{- end }}
 {{- end }}

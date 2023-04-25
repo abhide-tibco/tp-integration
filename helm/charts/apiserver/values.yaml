@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 global:
+  cp:
+    dataplaneId: default
+    instanceId: default
   apiserver:
     data:
       namespace: dp-integration-default
@@ -16,9 +19,6 @@ global:
         resources: {}
 
 replicaCount: 1
-
-instanceId: default
-dataplaneId: default
 
 image:
   repository: tci/apiserver

@@ -54,6 +54,10 @@ spec:
                   key: {{ $filename }}
             {{- end }}
             {{- end }}
+            - name: DATAPLANE_ID
+              value: {{ .Values.global.cp.dataplaneId }}
+            - name: INSTANCE_ID
+              value: {{ .Values.global.cp.instanceId }}
         {{- if .Values.global.apiserver.logging.enabled }}
         - name: fluent-bit
           image: {{ .Values.global.apiserver.logging.image.registry }}/tci/fluent-bit:{{ .Values.global.apiserver.logging.image.registry.tag }}

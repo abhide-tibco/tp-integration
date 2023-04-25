@@ -50,8 +50,8 @@ app.kubernetes.io/name: {{ include "bwprovisioner.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 dp.integration.app/type: "service"
 dp.integration.app/name: "bw-provisioner"
-dp.integration.app/instanceid: {{ .Values.instanceId }}
-dp.integration.app/dpid: {{ .Values.dataplaneId }}
+dp.integration.app/instanceid: {{ .Values.global.cp.instanceId }}
+dp.integration.app/dataplaneId: {{ .Values.global.cp.dataplaneId }}
 {{- end }}
 
 {{/*

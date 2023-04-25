@@ -1,5 +1,5 @@
 helmCharts:
-  - name: bwprovisioner-${INSTANCEID}
+  - name: bwprovisioner
     namespace: ${NAMESPACE}
     repository:
       git:
@@ -8,8 +8,6 @@ helmCharts:
         branch: ${BRANCH}
     values:
       - content: |
-          dataplaneId: ${DATAPLANEID}
-          instanceId: ${INSTANCEID}
           global:
             bwprovisioner:
               data:
@@ -33,7 +31,6 @@ helmCharts:
               paths:
               - path: /tibco/agent/integration/${INSTANCEID}/bwprovisioner/
                 pathType: Prefix
-
           volumes:
             orchestrator:
               persistentVolumeClaim:
@@ -44,10 +41,7 @@ helmCharts:
                     storage: 8Gi
               volumeName: ""
               existingClaim: ""
-          config:
-            DATAPLANE_ID: ${DATAPLANEID}
-            INSTANCE_ID: ${INSTANCEID}
-  - name: orchestrator-${INSTANCEID}
+  - name: orchestrator
     namespace: ${NAMESPACE}
     repository:
       git:
@@ -56,8 +50,6 @@ helmCharts:
         branch: ${BRANCH}
     values:
       - content: |
-          dataplaneId: ${DATAPLANEID}
-          instanceId: ${INSTANCEID}
           global:
             orchestrator:
               data:
@@ -91,9 +83,6 @@ helmCharts:
                     storage: 8Gi
               volumeName: ""
               existingClaim: ""
-          config:
-            DATAPLANE_ID: ${DATAPLANEID}
-            INSTANCE_ID: ${INSTANCEID}
  - name: apiserver
     namespace: ${NAMESPACE}
     repository:
@@ -103,8 +92,6 @@ helmCharts:
         branch: ${BRANCH}
     values:
       - content: |
-          dataplaneId: ${DATAPLANEID}
-          instanceId: ${INSTANCEID}
           global:
             apiserver:
               data:
@@ -144,9 +131,6 @@ helmCharts:
               paths:
               - path: /
                 pathType: Prefix
-          config:
-            DATAPLANE_ID: ${DATAPLANEID}
-            INSTANCE_ID: ${INSTANCEID}
     flags:
       install: true
       createNamespace: true

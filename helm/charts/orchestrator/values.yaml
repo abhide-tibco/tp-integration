@@ -3,6 +3,9 @@
 # Declare variables to be passed into your templates.
 
 global:
+  cp:
+    dataplaneId: default
+    instanceId: default
   orchestrator:
     data:
       namespace: dp-integration-default
@@ -24,8 +27,6 @@ global:
         resources: {}
 
 replicaCount: 1
-instanceId: default
-dataplaneId: default
 
 image:
   repository: tci/tci-orchestrator

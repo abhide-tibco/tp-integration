@@ -1,4 +1,4 @@
-#Platform Integration Capabilities helm charts
+# Platform Integration Capabilities helm charts
 
 ## Overview
 

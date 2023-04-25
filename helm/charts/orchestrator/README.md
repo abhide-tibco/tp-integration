@@ -1,4 +1,4 @@
-# Orchestrator Helm Charts
+# Orchestrator Helm Chart
 
 This repository hosts the official **[Orchestrator](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/orchestrator) Helm Charts** for deploying **Orchestrator** products to [Kubernetes](https://kubernetes.io/)
 

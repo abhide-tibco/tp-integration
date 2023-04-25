@@ -11,9 +11,7 @@ This directory contains the recipes to build and examples to use the [**TIBCO Pl
 See the respective README files for details and usage examples.
 
 **Note**: There are other recipes in the `charts` directory not listed here.
-They are used internally for better template reusability, and they include common software requirements and functions.
-
-**Note**: You can build each chart on its own as described in the respective READMEs, or you can use the provided `Makefile` within this directory to build all the charts with just one single command. (This  `Makefile` also takes care of their internal dependencies.)
+They will be added here whenver there is requirement for new capabilities addition.
 
 ## Prerequisites
 

@@ -1,4 +1,4 @@
-# BW Provisioner Helm Charts
+# BW Provisioner Helm Chart
 
 This repository hosts the official **[BW Provisioner](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bw-provisioner) Helm Charts** for deploying **BW Provisioner** products to [Kubernetes](https://kubernetes.io/)
 

@@ -1,4 +1,4 @@
-# API Server Helm Charts
+# API Server Helm Chart
 
 This repository hosts the official **[API Server](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/apiserver) Helm Charts** for deploying **API Server** products to [Kubernetes](https://kubernetes.io/)
 

@@ -4,15 +4,14 @@
 
 global:
   cp:
-    dataplaneId: defaultDpId
-    instanceId: defaultInstId
+    dataplaneId: defaultdpid
+    instanceId: defaultinstid
   bwprovisioner:
     data:
       namespace: dp-integration-default
     image:
-      #664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
-      registry: reldocker.tibco.com
-      tag: 2557-dp-integration
+      registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
+      tag: 35-m1-ext
     deploymanager:
       image:
         enabled: false
@@ -80,16 +79,15 @@ service:
 #  #      - chart-example.local
 
 ingress:
-  # -- Enables configuration of ingress to expose bwprovisioner. Requires ingress support in the Kubernetes cluster.
+  # -- Enables configuration of ingress to expose flogoprovisioner. Requires ingress support in the Kubernetes cluster.
   enabled: true
-  ingressClassName: haproxy
   hostsOverride: false
-  hosts: {}
-#  hosts:
-#    - host: ""
-#      paths:
-#        - path: /
-#          pathType: Prefix
+  className: haproxy
+  hosts:
+    - host: ""
+      paths:
+        - path: /
+          pathType: Prefix
   # -- Annotations for the ingress object. See documentation for your ingress controller for valid annotations.
   annotations: {}
   tls: []
@@ -181,7 +179,7 @@ volumes:
       # -- Specifies the name of the `StorageClass`
       # in case of kind use "standard"
       # in case of EKS "gp2"
-      storageClassName: "standard"
+      storageClassName: "gp2"
 
       # -- Specifies the standard K8s resource requests and/or limits
       resources:

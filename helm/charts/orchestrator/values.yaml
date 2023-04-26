@@ -10,9 +10,8 @@ global:
     data:
       namespace: dp-integration-default
     image:
-      #664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
-      registry: reldocker.tibco.com
-      tag: 2557-dp-integration
+      registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
+      tag: 6-m1-ext
     deploymanager:
       image:
         enabled: false
@@ -82,9 +81,14 @@ service:
 ingress:
   # -- Enables configuration of ingress to expose orchestrator. Requires ingress support in the Kubernetes cluster.
   enabled: true
-  ingressClassName: haproxy
   hostsOverride: false
-  hosts: {}
+  className: haproxy
+  hosts:
+    - host: ""
+      paths:
+        - path: /
+          pathType: Prefix
+
 #  hosts:
 #    - host: ""
 #      paths:

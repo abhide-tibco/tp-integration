@@ -45,16 +45,8 @@ spec:
     {{- else }}
     - http:
     {{- end }}
+        {{- if $.Values.ingress.hostsOverride -}}
         paths:
-          {{- if not $.Values.ingress.hostsOverride -}}
-          - path: /tibco/agent/integration/{{ $.Values.global.cp.instanceId }}/apiserver/
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ $fullName }}
-                port:
-                  number: {{ $.Values.service.Port }}
-          {{- end }}
           {{- range .paths }}
           - path: {{ .path }}
             {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
@@ -64,7 +56,17 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ .Values.service.Port }}
-          {{- end }}
+                  number: {{ $.Values.service.port }}
+            {{- end }}
+        {{- else}}
+        paths:
+          - path: /tibco/agent/integration/{{ $.Values.global.cp.instanceId }}/apiserver/
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $.Values.service.port }}
+        {{- end }}
   {{- end }}
 {{- end }}

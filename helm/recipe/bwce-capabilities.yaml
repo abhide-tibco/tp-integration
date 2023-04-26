@@ -27,11 +27,6 @@ helmCharts:
             className: ${INGRESS_CLASS}
             enabled: true
             hostsOverride: false
-            hosts:
-            - host: ""
-              paths:
-              - path: /tibco/agent/integration/${INSTANCEID}/bwprovisioner/
-                pathType: Prefix
           volumes:
             orchestrator:
               persistentVolumeClaim:
@@ -70,11 +65,6 @@ helmCharts:
             className: ${INGRESS_CLASS}
             enabled: true
             hostsOverride: false
-            hosts:
-            - host: ""
-              paths:
-              - path: /tibco/agent/integration/${INSTANCEID}/orchestrator/
-                pathType: Prefix
           volumes:
             orchestrator:
               persistentVolumeClaim:
@@ -112,11 +102,6 @@ helmCharts:
               meta.helm.sh/release-namespace: ${NAMESPACE}
             className: ${INGRESS_CLASS}
             enabled: true
-            hosts:
-            - host: ""
-              paths:
-              - path: /tibco/agent/integration/${INSTANCEID}/apiserver/
-                pathType: Prefix
           ingressExternal:
             annotations:
               haproxy.org/cors-enable: "true"

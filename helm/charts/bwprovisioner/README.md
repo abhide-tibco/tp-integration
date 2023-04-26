@@ -13,8 +13,15 @@ Get the latest [Helm release](https://github.com/helm/helm#install).
 Before installing BW Provisioner helm charts, you need to add the [BW Provisioner helm repository](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bw-provisioner) to your helm client.
 
 ```bash
-helm repo add bw-provisioner https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bwprovisioner
+helm repo add bwprovisioner https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bwprovisioner
 helm repo update
+```
+### Install locally with override values
+
+```bash
+helm upgrade --install bwprovisioner --namespace <namespace> --values <new file name>.yaml
+Or
+helm upgrade --install bwprovisioner --namespace <namespace> -f <new file name>.yaml
 ```
 
 **Note:** For instructions on how to install a chart follow instructions in its _README.md_.

@@ -39,10 +39,140 @@ You can package the provided charts, one by one, by following these steps from e
 
 Repeat for each of the charts.
 
+## Recipe for BWCE Capabilities
+- [BWCE Capabilities]([https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/charts/bwprovisioner/README.md](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/recipe/bwce-capabilities.yaml)): TIBCO Platform Integration bwce capabilties recipe.
+```yaml
+    helmCharts:
+  - name: bwprovisioner
+    namespace: ${NAMESPACE}
+    repository:
+      git:
+        host: https://github.com/sasahoo-tibco/tp-integration.git
+        path: /helm/charts/bwprovisioner
+        branch: ${BRANCH}
+    values:
+      - content: |
+          global:
+            bwprovisioner:
+              data:
+                namspace: ${NAMESPACE}
+              image:
+                registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
+                tag: 35-m1-ext
+          ingress:
+            annotations:
+              haproxy.org/cors-enable: "true"
+              haproxy.org/load-balance: leastconn
+              haproxy.org/src-ip-header: X-Real-IP
+              haproxy.org/timeout-http-request: 600s
+              ingress.kubernetes.io/rewrite-target: /
+              meta.helm.sh/release-name: bwprovisioner
+              meta.helm.sh/release-namespace: ${NAMESPACE}
+            className: ${INGRESS_CLASS}
+            enabled: true
+            hostsOverride: false
+          volumes:
+            orchestrator:
+              persistentVolumeClaim:
+                create: true
+              storageClassName: "gp2"
+                resources:
+                  requests:
+                    storage: 8Gi
+              volumeName: ""
+              existingClaim: ""
+  - name: orchestrator
+    namespace: ${NAMESPACE}
+    repository:
+      git:
+        host: https://github.com/sasahoo-tibco/tp-integration.git
+        path: /helm/charts/orchestrator
+        branch: ${BRANCH}
+    values:
+      - content: |
+          global:
+            orchestrator:
+              data:
+                namspace: ${NAMESPACE}
+              image:
+                registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
+                tag: 6-m1-ext
+          ingress:
+            annotations:
+              haproxy.org/cors-enable: "true"
+              haproxy.org/load-balance: leastconn
+              haproxy.org/src-ip-header: X-Real-IP
+              haproxy.org/timeout-http-request: 600s
+              ingress.kubernetes.io/rewrite-target: /
+              meta.helm.sh/release-name: orchestrator
+              meta.helm.sh/release-namespace: ${NAMESPACE}
+            className: ${INGRESS_CLASS}
+            enabled: true
+            hostsOverride: false
+          volumes:
+            orchestrator:
+              persistentVolumeClaim:
+                create: true
+              storageClassName: "gp2"
+                resources:
+                  requests:
+                    storage: 8Gi
+              volumeName: ""
+              existingClaim: ""
+ - name: apiserver
+    namespace: ${NAMESPACE}
+    repository:
+      git:
+        host: https://github.com/sasahoo-tibco/tp-integration.git
+        path: /helm/charts/apiserver
+        branch: ${BRANCH}
+    values:
+      - content: |
+          global:
+            apiserver:
+              data:
+                namspace: ${NAMESPACE}
+              image:
+                registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
+                tag: 6-m1-ext
+          ingress:
+            annotations:
+              haproxy.org/cors-enable: "true"
+              haproxy.org/load-balance: leastconn
+              haproxy.org/src-ip-header: X-Real-IP
+              haproxy.org/timeout-http-request: 600s
+              ingress.kubernetes.io/rewrite-target: /
+              meta.helm.sh/release-name: apiserver
+              meta.helm.sh/release-namespace: ${NAMESPACE}
+            className: ${INGRESS_CLASS}
+            enabled: true
+          ingressExternal:
+            annotations:
+              haproxy.org/cors-enable: "true"
+              haproxy.org/load-balance: leastconn
+              haproxy.org/src-ip-header: X-Real-IP
+              haproxy.org/timeout-http-request: 600s
+              ingress.kubernetes.io/rewrite-target: /
+              meta.helm.sh/release-name: apiserver
+              meta.helm.sh/release-namespace: ${NAMESPACE}
+            className: ${INGRESS_CLASS}-ext
+            enabled: true
+            hostsOverride: false
+            hosts:
+            - host: "test.tci-env.ap-southeast-2.tcie.pro"
+              paths:
+              - path: /
+                pathType: Prefix
+    flags:
+      install: true
+      createNamespace: true
+      dependencyUpdate: true
+ ```
+
+
 ### Customize and extend the charts
 
-These recipes provide a standard, canonical, typical, or vanilla deployment for the TIBCO Integration Application Platform.
-They are suitable for most of the use case scenarios.
+These recipes provide a standard, canonical, typical, or vanilla deployment for the TIBCO Platfomr Integration Application.
 
 You are welcome to use and modify the recipes and adapt them to your specific use case, in compliance with the Apache License 2.0.
 However, we recommend that you extend these charts, rather than modify them.

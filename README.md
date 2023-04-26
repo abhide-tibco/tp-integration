@@ -11,7 +11,7 @@ This directory contains the recipes to build and examples to use the [**TIBCO Pl
 See the respective README files for details and usage examples.
 
 **Note**: There are other recipes in the `charts` directory not listed here.
-They will be added here whenver there is requirement for new capabilities addition.
+Those chart will be added here for new capabilities recipe.
 
 ## Prerequisites
 

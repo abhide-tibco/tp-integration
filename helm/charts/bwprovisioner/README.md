@@ -19,9 +19,9 @@ helm repo update
 ### Install locally with override values
 
 ```bash
-helm upgrade --install bwprovisioner --namespace <namespace> --values <new file name>.yaml
+helm upgrade --install bwprovisioner [--namespace <namespace>] --values <new file name>.yaml
 Or
-helm upgrade --install bwprovisioner --namespace <namespace> -f <new file name>.yaml
+helm upgrade --install bwprovisioner [--namespace <namespace>] -f <new file name>.yaml
 ```
 
 **Note:** For instructions on how to install a chart follow instructions in its _README.md_.

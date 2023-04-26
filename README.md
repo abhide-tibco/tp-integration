@@ -41,7 +41,7 @@ Repeat for each of the charts.
 
 ### Customize and extend the charts
 
-These recipes provide a standard, canonical, typical, or vanilla deployment for the TIBCO Spotfire® Platform.
+These recipes provide a standard, canonical, typical, or vanilla deployment for the TIBCO Integration Application Platform.
 They are suitable for most of the use case scenarios.
 
 You are welcome to use and modify the recipes and adapt them to your specific use case, in compliance with the Apache License 2.0.

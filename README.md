@@ -39,8 +39,6 @@ You can package the provided charts, one by one, by following these steps from e
 
 Repeat for each of the charts.
 
-**Note**: The helm chart packages have dependencies; check the provided `Makefile` for more details.
-
 ### Customize and extend the charts
 
 These recipes provide a standard, canonical, typical, or vanilla deployment for the TIBCO Spotfire® Platform.

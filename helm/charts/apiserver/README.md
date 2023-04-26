@@ -16,6 +16,13 @@ Before installing API Server helm charts, you need to add the [API Server helm r
 helm repo add apiserver https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/apiserver
 helm repo update
 ```
+### Install locally with override values
+
+```bash
+helm upgrade --install apiserver [--namespace <namespace>] --values <new file name>.yaml
+Or
+helm upgrade --install apiserver [--namespace <namespace>] -f <new file name>.yaml
+```
 
 **Note:** For instructions on how to install a chart follow instructions in its _README.md_.
 

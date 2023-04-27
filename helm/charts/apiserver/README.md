@@ -28,7 +28,7 @@ helm upgrade --install apiserver [--namespace <namespace>] -f <new file name>.ya
 
 ## Contributing to API Server Charts
 
-Fork the `repo`, make changes and then please run `make lint` to lint charts locally, and at least install the chart to see it is working. :)
+Fork the `repo`, make changes and then please run `helm lint` to lint charts locally, and at least install the chart to see it is working. :)
 
 On success make a [pull request](https://help.github.com/articles/using-pull-requests) (PR) on to the `master` branch.
 

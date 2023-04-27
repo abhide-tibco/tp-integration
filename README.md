@@ -1,4 +1,4 @@
-# Platform Integration Applications Capabilities helm charts
+# TIBCO Platform Integration Applications Capabilities helm charts
 
 ## Overview
 

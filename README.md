@@ -2,7 +2,7 @@
 
 ## Overview
 
-This directory contains the recipes to build and examples to use the [**TIBCO Platform Intgration Capabilties**](https://github.com/sasahoo-tibco/tp-integration) Helm charts:
+This directory contains the recipes to build and examples to use the [**TIBCO Platform Intgration Applications Capabilties**](https://github.com/sasahoo-tibco/tp-integration) Helm charts:
 
 - [bwce provisioner](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/charts/bwprovisioner/README.md): TIBCO Platform Integration Application: BWCE provisioner helm chart.
 - [orchestrator](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/charts/orchestrator/README.md): TIBCO Platform Integration Application: Orchestrator helm chart.

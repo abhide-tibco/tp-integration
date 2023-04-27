@@ -1,1 +1,1 @@
-TIBCO Platform Integration Application: BW Provisioner chart creates the capabilities for build, deploy and scale of BWCE application.
+TIBCO Platform Integration Application: BWCE Provisioner chart creates the capabilities for build, deploy and scale of BWCE application.

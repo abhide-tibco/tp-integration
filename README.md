@@ -41,6 +41,7 @@ Repeat for each of the charts.
 
 ## Recipe for BWCE Capabilities
 - [BWCE Capabilities](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/recipe/bwce-capabilities.yaml): TIBCO Platform Integration bwce capabilties recipe.
+#### Example of the recipe
 ```bash
     helmCharts:
   - name: bwprovisioner
@@ -68,7 +69,6 @@ Repeat for each of the charts.
               ingress.kubernetes.io/rewrite-target: /
               meta.helm.sh/release-name: bwprovisioner
               meta.helm.sh/release-namespace: ${NAMESPACE}
-            className: ${INGRESS_CLASS}
             enabled: true
             hostsOverride: false
           volumes:
@@ -106,7 +106,6 @@ Repeat for each of the charts.
               ingress.kubernetes.io/rewrite-target: /
               meta.helm.sh/release-name: orchestrator
               meta.helm.sh/release-namespace: ${NAMESPACE}
-            className: ${INGRESS_CLASS}
             enabled: true
             hostsOverride: false
           volumes:
@@ -144,8 +143,8 @@ Repeat for each of the charts.
               ingress.kubernetes.io/rewrite-target: /
               meta.helm.sh/release-name: apiserver
               meta.helm.sh/release-namespace: ${NAMESPACE}
-            className: ${INGRESS_CLASS}
             enabled: true
+            hostsOverride: false
           ingressExternal:
             annotations:
               haproxy.org/cors-enable: "true"

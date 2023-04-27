@@ -24,7 +24,6 @@ helmCharts:
               ingress.kubernetes.io/rewrite-target: /
               meta.helm.sh/release-name: bwprovisioner
               meta.helm.sh/release-namespace: ${NAMESPACE}
-            className: ${INGRESS_CLASS}
             enabled: true
             hostsOverride: false
           volumes:
@@ -62,7 +61,6 @@ helmCharts:
               ingress.kubernetes.io/rewrite-target: /
               meta.helm.sh/release-name: orchestrator
               meta.helm.sh/release-namespace: ${NAMESPACE}
-            className: ${INGRESS_CLASS}
             enabled: true
             hostsOverride: false
           volumes:
@@ -100,8 +98,8 @@ helmCharts:
               ingress.kubernetes.io/rewrite-target: /
               meta.helm.sh/release-name: apiserver
               meta.helm.sh/release-namespace: ${NAMESPACE}
-            className: ${INGRESS_CLASS}
             enabled: true
+            hostsOverride: false
           ingressExternal:
             annotations:
               haproxy.org/cors-enable: "true"

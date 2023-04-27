@@ -49,8 +49,8 @@ Selector labels
 app.kubernetes.io/name: {{ include "bwprovisioner.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 dp.integration.app/type: "service"
-dp.integration.app/name: "bw-provisioner"
-dp.integration.app/instanceid: {{ .Values.global.cp.instanceId }}
+dp.integration.app/name: "bwprovisioner"
+dp.integration.app/instanceId: {{ .Values.global.cp.instanceId }}
 dp.integration.app/dataplaneId: {{ .Values.global.cp.dataplaneId }}
 {{- end }}
 

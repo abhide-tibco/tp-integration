@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 global:
   cp:
-    dataplaneId: defaultDpId
+    dataplaneId: dp-dp1
     instanceId: defaultInstId
   apiserver:
     data:

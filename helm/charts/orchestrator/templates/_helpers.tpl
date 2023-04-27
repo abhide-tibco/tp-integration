@@ -50,7 +50,7 @@ app.kubernetes.io/name: {{ include "orchestrator.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 dp.integration.app/type: "service"
 dp.integration.app/name: "orchestrator"
-dp.integration.app/instanceid: {{ .Values.global.cp.instanceId }}
+dp.integration.app/instanceId: {{ .Values.global.cp.instanceId }}
 dp.integration.app/dataplaneId: {{ .Values.global.cp.dataplaneId }}
 {{- end }}
 

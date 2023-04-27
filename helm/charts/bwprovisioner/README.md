@@ -1,6 +1,6 @@
 # BW Provisioner Helm Chart
 
-This repository hosts the official **[BW Provisioner](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bw-provisioner) Helm Charts** for deploying **BW Provisioner** products to [Kubernetes](https://kubernetes.io/)
+This repository hosts the official **[BW Provisioner](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bwprovisioner) Helm Charts** for deploying **BW Provisioner** products to [Kubernetes](https://kubernetes.io/)
 
 ## Install Helm (only V3 is supported)
 
@@ -10,7 +10,7 @@ Get the latest [Helm release](https://github.com/helm/helm#install).
 
 ### Add BW Provisioner Helm repository
 
-Before installing BW Provisioner helm charts, you need to add the [BW Provisioner helm repository](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bw-provisioner) to your helm client.
+Before installing BW Provisioner helm charts, you need to add the [BW Provisioner helm repository](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bwprovisioner) to your helm client.
 
 ```bash
 helm repo add bwprovisioner https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bwprovisioner

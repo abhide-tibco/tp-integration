@@ -4,7 +4,7 @@
 
 global:
   cp:
-    dataplaneId: defaultDpId
+    dataplaneId: dp-dp1
     instanceId: defaultInstId
   orchestrator:
     data:

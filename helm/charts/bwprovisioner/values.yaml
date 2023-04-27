@@ -4,14 +4,14 @@
 
 global:
   cp:
-    dataplaneId: defaultdpid
+    dataplaneId: dp-dp1
     instanceId: defaultinstid
   bwprovisioner:
     data:
       namespace: dp-integration-default
     image:
       registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-      tag: 35-m1-ext
+      tag: 38-m1-ext
     deploymanager:
       image:
         enabled: false

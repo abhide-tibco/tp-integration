@@ -20,12 +20,13 @@ metadata:
     app.kubernetes.io/component: load-balancer
     {{- include "orchestrator.labels" . | nindent 4 }}
   annotations:
+    ingress.kubernetes.io/rewrite-target: /
     {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.ingress.className }}-{{ $fullName }}-{{ .Values.global.cp.instanceId }}
+  ingressClassName: haproxy-{{ .Values.global.cp.dataplaneId }}
   {{- end }}
   {{- if .Values.ingress.tls }}
   tls:

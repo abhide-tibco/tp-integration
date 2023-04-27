@@ -48,10 +48,10 @@ Selector labels
 {{- define "orchestrator.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "orchestrator.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-dp.integration.app/type: "service"
-dp.integration.app/name: "orchestrator"
-dp.integration.app/instanceId: {{ .Values.global.cp.instanceId }}
-dp.integration.app/dataplaneId: {{ .Values.global.cp.dataplaneId }}
+dp.integration.app/type: "capability"
+dp.integration.capability/name: "orchestrator"
+dp.integration.capability/instanceId: {{ .Values.global.cp.instanceId }}
+dp.integration.capability/dataplaneId: {{ .Values.global.cp.dataplaneId }}
 {{- end }}
 
 {{/*

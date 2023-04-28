@@ -10,7 +10,7 @@ global:
       namespace: dp-integration-default
     image:
       registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-      tag: 6-m1-ext
+      tag: 7-m1-ext
     logging:
       image:
         enabled: false

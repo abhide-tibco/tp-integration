@@ -79,9 +79,9 @@ Repeat for each of the charts.
                 create: true
               # Storage details needs to provided   
               storageClassName: "" # Storage Class Name is compulsory
-                resources:
-                  requests:
-                    storage: 1Gi # Storage size should be provided
+              resources:
+                requests:
+                  storage: 1Gi # Storage size should be provided
   - name: artifactmanager
     namespace: ${NAMESPACE}
     repository:
@@ -117,9 +117,9 @@ Repeat for each of the charts.
                 create: true
               # Storage details needs to provided  
               storageClassName: "" # Storage Class Name is compulsory
-                resources:
-                  requests:
-                    storage: 1Gi # Storage size should be provided
+              resources:
+                requests:
+                  storage: 1Gi # Storage size should be provided
  - name: apiserver
     namespace: ${NAMESPACE}
     repository:

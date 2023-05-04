@@ -34,9 +34,9 @@ helmCharts:
                 create: true
               # Storage details needs to provided
               storageClassName: "" # Storage Class Name is compulsory
-                resources:
-                  requests:
-                    storage: 1Gi # Storage size should be provided
+              resources:
+                requests:
+                  storage: 1Gi # Storage size should be provided
     flags:
       install: true
       createNamespace: true

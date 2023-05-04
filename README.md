@@ -5,7 +5,7 @@
 This directory contains the recipes to build and examples to use the [**TIBCO Platform Intgration Applications Capabilties**](https://github.com/sasahoo-tibco/tp-integration) Helm charts:
 
 - [bwce provisioner](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/charts/bwprovisioner/README.md): TIBCO Platform Integration Application: BWCE provisioner helm chart.
-- [orchestrator](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/charts/orchestrator/README.md): TIBCO Platform Integration Application: Orchestrator helm chart.
+- [artifact manager](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/charts/artifactmanager/README.md): TIBCO Platform Integration Application: Artifact Manager helm chart.
 - [api server](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/charts/apiserver/README.md): TIBCO Platform Integration Application: API Server  helm chart.
 
 See the respective README files for details and usage examples.
@@ -72,21 +72,22 @@ Repeat for each of the charts.
             enabled: true
             hostsOverride: false
           volumes:
-            orchestrator:
+            bwprovisioner:
+              # subPath is optional, if empty, default path will be used   
+              subPath: ""
               persistentVolumeClaim:
                 create: true
-              storageClassName: "gp2"
+              # Storage details needs to provided   
+              storageClassName: "" # Storage Class Name is compulsory
                 resources:
                   requests:
-                    storage: 8Gi
-              volumeName: ""
-              existingClaim: ""
-  - name: orchestrator
+                    storage: 1Gi # Storage size should be provided
+  - name: artifactmanager
     namespace: ${NAMESPACE}
     repository:
       git:
         host: https://github.com/sasahoo-tibco/tp-integration.git
-        path: /helm/charts/orchestrator
+        path: /helm/charts/artifactmanager
         branch: ${BRANCH}
     values:
       - content: |
@@ -109,15 +110,16 @@ Repeat for each of the charts.
             enabled: true
             hostsOverride: false
           volumes:
-            orchestrator:
+            artifactmanager:
+              # subPath is optional, if empty, default path will be used 
+              subPath: ""  
               persistentVolumeClaim:
                 create: true
-              storageClassName: "gp2"
+              # Storage details needs to provided  
+              storageClassName: "" # Storage Class Name is compulsory
                 resources:
                   requests:
-                    storage: 8Gi
-              volumeName: ""
-              existingClaim: ""
+                    storage: 1Gi # Storage size should be provided
  - name: apiserver
     namespace: ${NAMESPACE}
     repository:

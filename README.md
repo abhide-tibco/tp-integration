@@ -173,7 +173,7 @@ Repeat for each of the charts.
 
 ### Customize and extend the charts
 
-These recipes provide a standard, canonical, typical, or vanilla deployment for the TIBCO Platfomr Integration Application.
+These recipes provide a standard, canonical, typical, or vanilla deployment for the TIBCO Platform Integration Application.
 
 You are welcome to use and modify the recipes and adapt them to your specific use case, in compliance with the Apache License 2.0.
 However, we recommend that you extend these charts, rather than modify them.

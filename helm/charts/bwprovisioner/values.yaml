@@ -80,7 +80,7 @@ service:
 
 ingress:
   # -- Enables configuration of ingress to expose flogoprovisioner. Requires ingress support in the Kubernetes cluster.
-  enabled: true
+  enabled: false
   hostsOverride: false
   className: haproxy
   hosts:
@@ -177,22 +177,23 @@ volumes:
       create: true
 
       # -- Specifies the name of the `StorageClass`
-      # in case of kind use "standard"
-      # in case of EKS "gp2"
-      storageClassName: "gp2"
+      # in case of Kind/miniKube use "standard"
+      # in case of EKS/EBS "gp2"
+      # in case of EFS ""
+      storageClassName: ""
 
       # -- Specifies the standard K8s resource requests and/or limits
       resources:
         requests:
-          storage: 8Gi
+          storage: 10000Gi
 
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
 
       volumeMode: Filesystem
 
       # -- Specifies the name of the persistent volume
-      volumeName: ""
+      volumeName: "test-pv-store"
 
     # -- When `persistentVolumeClaim.create` is `false`, then use this value to define an already-existing PVC.
     existingClaim: ""

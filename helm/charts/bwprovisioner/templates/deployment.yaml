@@ -46,6 +46,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: {{ .Values.volumes.bwprovisioner.volumePath }}
+              {{- if .Values.volumes.bwprovisioner.subPath }}
+              subPath: {{ .Values.volumes.bwprovisioner.subPath }}
+              {{- end }}
           livenessProbe:
             httpGet:
               scheme: HTTP

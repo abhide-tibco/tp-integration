@@ -172,6 +172,7 @@ config:
 volumes:
   bwprovisioner:
     volumePath: "/data/"
+    subPath: "subdir"
     persistentVolumeClaim:
       # -- If `true`, then a `PersistentVolumeClaim` (PVC) is created.
       create: true
@@ -185,7 +186,7 @@ volumes:
       # -- Specifies the standard K8s resource requests and/or limits
       resources:
         requests:
-          storage: 10000Gi
+          storage: 1Gi
 
       accessModes:
         - ReadWriteMany
@@ -193,6 +194,7 @@ volumes:
       volumeMode: Filesystem
 
       # -- Specifies the name of the persistent volume
+      # If EBS/EFS if storage class given, keep volume name empty
       volumeName: "test-pv-store"
 
     # -- When `persistentVolumeClaim.create` is `false`, then use this value to define an already-existing PVC.

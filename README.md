@@ -43,7 +43,7 @@ Repeat for each of the charts.
 - [BWCE Capabilities](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/recipe/bwce-capabilities.yaml): TIBCO Platform Integration bwce capabilties recipe.
 #### Example of the recipe
 ```bash
-    helmCharts:
+  helmCharts:
   - name: bwprovisioner
     namespace: ${NAMESPACE}
     repository:

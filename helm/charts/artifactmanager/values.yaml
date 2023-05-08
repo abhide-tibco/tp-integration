@@ -1,12 +1,12 @@
-# Default values for orchestrator.
+# Default values for artifactmanager.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 global:
   cp:
     dataplaneId: dp-dp1
-    instanceId: defaultInstId
-  orchestrator:
+    instanceId: defaultinstid
+  artifactmanager:
     data:
       namespace: dp-integration-default
     image:
@@ -177,7 +177,7 @@ config:
 
 volumes:
   artifactmanager:
-    volumePath: "/data/"
+    volumePath: "/data2/"
     subPath: ""
     persistentVolumeClaim:
       # -- If `true`, then a `PersistentVolumeClaim` (PVC) is created.
@@ -187,7 +187,7 @@ volumes:
       # in case of Kind/miniKube use "standard"
       # in case of EKS/EBS "gp2"
       # in case of EFS ""
-      storageClassName: ""
+      storageClassName: "gp2"
 
       # -- Specifies the standard K8s resource requests and/or limits
       resources:

@@ -4,7 +4,7 @@
 global:
   cp:
     dataplaneId: dp-dp1
-    instanceId: defaultInstId
+    instanceId: defaultinstid
   apiserver:
     data:
       namespace: dp-integration-default
@@ -29,6 +29,13 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+probes:
+  liveness:
+    initialDelaySeconds: 3
+    failureThreshold: 5
+    periodSeconds: 5
+    timeoutSeconds: 5
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -95,18 +102,18 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
- ingressExternal:
-    # -- Enables configuration of ingress to expose apiserver. Requires ingress support in the Kubernetes cluster.
-   enabled: false
-   ingressClassName: traefik
-   hosts:
-     - host: "test.tci-env.ap-southeast-2.tcie.pro"
-       paths:
-         - path: /
-           pathType: Prefix
+ingressExternal:
+  # -- Enables configuration of ingress to expose apiserver. Requires ingress support in the Kubernetes cluster.
+  enabled: false
+  className: traefik
+  hosts:
+    - host: "test.tci-env.ap-southeast-2.tcie.pro"
+      paths:
+        - path: /
+          pathType: Prefix
    # -- Annotations for the ingress object. See documentation for your ingress controller for valid annotations.
-   annotations: {}
-   tls: []
+  annotations: {}
+  tls: []
    #  - secretName: chart-example-tls
    #    hosts:
    #      - chart-example.local

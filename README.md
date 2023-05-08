@@ -78,10 +78,10 @@ Repeat for each of the charts.
               persistentVolumeClaim:
                 create: true
               # Storage details needs to provided   
-              storageClassName: "" # Storage Class Name is compulsory
+              storageClassName: ${STORAGE_CLASS_NAME} # Storage Class Name is compulsory
               resources:
                 requests:
-                  storage: 1Gi # Storage size should be provided
+                  storage: ${STORAGE_SIZE} # Storage size should be provided
   - name: artifactmanager
     namespace: ${NAMESPACE}
     repository:
@@ -105,7 +105,7 @@ Repeat for each of the charts.
               haproxy.org/src-ip-header: X-Real-IP
               haproxy.org/timeout-http-request: 600s
               ingress.kubernetes.io/rewrite-target: /
-              meta.helm.sh/release-name: orchestrator
+              meta.helm.sh/release-name: artifactmanager
               meta.helm.sh/release-namespace: ${NAMESPACE}
             enabled: true
             hostsOverride: false
@@ -116,10 +116,10 @@ Repeat for each of the charts.
               persistentVolumeClaim:
                 create: true
               # Storage details needs to provided  
-              storageClassName: "" # Storage Class Name is compulsory
+              storageClassName: ${STORAGE_CLASS_NAME} # Storage Class Name is compulsory
               resources:
                 requests:
-                  storage: 1Gi # Storage size should be provided
+                  storage: ${STORAGE_SIZE} # Storage size should be provided
  - name: apiserver
     namespace: ${NAMESPACE}
     repository:
@@ -156,11 +156,9 @@ Repeat for each of the charts.
               ingress.kubernetes.io/rewrite-target: /
               meta.helm.sh/release-name: apiserver
               meta.helm.sh/release-namespace: ${NAMESPACE}
-            className: ${INGRESS_CLASS}-ext
             enabled: true
-            hostsOverride: false
             hosts:
-            - host: "test.tci-env.ap-southeast-2.tcie.pro"
+            - host: ${EXTERNAL_HOST}
               paths:
               - path: /
                 pathType: Prefix

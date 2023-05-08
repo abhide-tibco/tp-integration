@@ -3,7 +3,7 @@ version: 1.0.0
 recipe:
   helmCharts:
     - name: bwprovisioner
-      namespace: tibco-dp-chc92v02p4gfuco11sng
+      namespace: tibco-dp-chcjpko2p4gfuco11ti0
       repository:
         git:
           host: https://github.com/sasahoo-tibco/tp-integration.git
@@ -14,7 +14,7 @@ recipe:
             global:
               bwprovisioner:
                 data:
-                  namspace: tibco-dp-chc92v02p4gfuco11sng
+                  namspace: tibco-dp-chcjpko2p4gfuco11ti0
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
                   tag: 38-m1-ext
@@ -26,7 +26,7 @@ recipe:
                 haproxy.org/timeout-http-request: 600s
                 ingress.kubernetes.io/rewrite-target: /
                 meta.helm.sh/release-name: bwprovisioner
-                meta.helm.sh/release-namespace: tibco-dp-chc92v02p4gfuco11sng
+                meta.helm.sh/release-namespace: tibco-dp-chcjpko2p4gfuco11ti0
               enabled: true
               hostsOverride: false
             volumes:
@@ -40,7 +40,7 @@ recipe:
                     requests:
                       storage: 4Gi
     - name: artifactmanager
-      namespace: tibco-dp-chc92v02p4gfuco11sng
+      namespace: tibco-dp-chcjpko2p4gfuco11ti0
       repository:
         git:
           host: https://github.com/sasahoo-tibco/tp-integration.git
@@ -51,7 +51,7 @@ recipe:
             global:
               artifactmanager:
                 data:
-                  namspace: tibco-dp-chc92v02p4gfuco11sng
+                  namspace: tibco-dp-chcjpko2p4gfuco11ti0
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
                   tag: 11-m1-ext
@@ -63,7 +63,7 @@ recipe:
                 haproxy.org/timeout-http-request: 600s
                 ingress.kubernetes.io/rewrite-target: /
                 meta.helm.sh/release-name: artifactmanager
-                meta.helm.sh/release-namespace: tibco-dp-chc92v02p4gfuco11sng
+                meta.helm.sh/release-namespace: tibco-dp-chcjpko2p4gfuco11ti0
               enabled: true
               hostsOverride: false
             volumes:
@@ -77,7 +77,7 @@ recipe:
                     requests:
                       storage: 2Gi
     - name: apiserver
-      namespace: tibco-dp-chc92v02p4gfuco11sng
+      namespace: tibco-dp-chcjpko2p4gfuco11ti0
       repository:
         git:
           host: https://github.com/sasahoo-tibco/tp-integration.git
@@ -88,7 +88,7 @@ recipe:
             global:
               apiserver:
                 data:
-                  namspace: tibco-dp-chc92v02p4gfuco11sng
+                  namspace: tibco-dp-chcjpko2p4gfuco11ti0
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
                   tag: 7-m1-ext
@@ -100,7 +100,7 @@ recipe:
                 haproxy.org/timeout-http-request: 600s
                 ingress.kubernetes.io/rewrite-target: /
                 meta.helm.sh/release-name: apiserver
-                meta.helm.sh/release-namespace: tibco-dp-chc92v02p4gfuco11sng
+                meta.helm.sh/release-namespace: tibco-dp-chcjpko2p4gfuco11ti0
               enabled: true
               hostsOverride: false
             ingressExternal:
@@ -111,7 +111,7 @@ recipe:
                 haproxy.org/timeout-http-request: 600s
                 ingress.kubernetes.io/rewrite-target: /
                 meta.helm.sh/release-name: apiserver
-                meta.helm.sh/release-namespace: tibco-dp-chc92v02p4gfuco11sng
+                meta.helm.sh/release-namespace: tibco-dp-chcjpko2p4gfuco11ti0
               enabled: true
               hosts:
                 - host: "test.tci-env.us-west-2.tcie.pro"

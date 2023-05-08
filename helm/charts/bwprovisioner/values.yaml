@@ -181,7 +181,7 @@ volumes:
       # in case of Kind/miniKube use "standard"
       # in case of EKS/EBS "gp2"
       # in case of EFS ""
-      #storageClassName: ""
+      storageClassName: ""
 
       # -- Specifies the standard K8s resource requests and/or limits
       resources:
@@ -195,7 +195,7 @@ volumes:
 
       # -- Specifies the name of the persistent volume
       # If EBS/EFS if storage class given, keep volume name empty
-      #volumeName: ""
+      volumeName: ""
 
     # -- When `persistentVolumeClaim.create` is `false`, then use this value to define an already-existing PVC.
     existingClaim: ""

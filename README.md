@@ -44,10 +44,7 @@ Repeat for each of the charts.
 - [BWCE Capabilities](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/recipe/bwce-capabilities.yaml): TIBCO Platform Integration bwce capabilties recipe.
 #### Example of the recipe
 ```bash
-  capabilityId: TETRIS
-  version: 1.0.0
-  recipe:
-    helmCharts:
+  helmCharts:
     - name: bwprovisioner
       namespace: ${NAMESPACE}
       repository:
@@ -80,106 +77,92 @@ Repeat for each of the charts.
                 persistentVolumeClaim:
                   create: true
                   storageClassName: ${STORAGE_CLASS_NAME}
-                  accessModes:
-                    - ReadWriteOnce
       flags:
         install: true
         createNamespace: true
         dependencyUpdate: true
-  isDevTesting: true
-  status: deployed
-  region: us-west-2
-  tags:
-    - Tag1
-    - Tag2
-
- ```
-
-## Recipe for Core Capabilities
-
-```bash
-  helmCharts:
-  - name: artifactmanager
-    namespace: ${NAMESPACE}
-    repository:
-      git:
-        host: https://github.com/sasahoo-tibco/tp-integration.git
-        path: /helm/charts/artifactmanager
-        branch: ${BRANCH}
-    values:
-      - content: |
-          global:
-            orchestrator:
-              data:
-                namspace: ${NAMESPACE}
-              image:
-                registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
-                tag: 6-m1-ext
-          ingress:
-            annotations:
-              haproxy.org/cors-enable: "true"
-              haproxy.org/load-balance: leastconn
-              haproxy.org/src-ip-header: X-Real-IP
-              haproxy.org/timeout-http-request: 600s
-              ingress.kubernetes.io/rewrite-target: /
-              meta.helm.sh/release-name: artifactmanager
-              meta.helm.sh/release-namespace: ${NAMESPACE}
-            enabled: true
-            hostsOverride: false
-          volumes:
-            artifactmanager:
-              # subPath is optional, if empty, default path will be used 
-              subPath: ""  
-              persistentVolumeClaim:
-                create: true
-              # Storage details needs to provided  
-              storageClassName: ${STORAGE_CLASS_NAME} # Storage Class Name is compulsory
- - name: apiserver
-    namespace: ${NAMESPACE}
-    repository:
-      git:
-        host: https://github.com/sasahoo-tibco/tp-integration.git
-        path: /helm/charts/apiserver
-        branch: ${BRANCH}
-    values:
-      - content: |
-          global:
-            apiserver:
-              data:
-                namspace: ${NAMESPACE}
-              image:
-                registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
-                tag: 6-m1-ext
-          ingress:
-            annotations:
-              haproxy.org/cors-enable: "true"
-              haproxy.org/load-balance: leastconn
-              haproxy.org/src-ip-header: X-Real-IP
-              haproxy.org/timeout-http-request: 600s
-              ingress.kubernetes.io/rewrite-target: /
-              meta.helm.sh/release-name: apiserver
-              meta.helm.sh/release-namespace: ${NAMESPACE}
-            enabled: true
-            hostsOverride: false
-          ingressExternal:
-            annotations:
-              haproxy.org/cors-enable: "true"
-              haproxy.org/load-balance: leastconn
-              haproxy.org/src-ip-header: X-Real-IP
-              haproxy.org/timeout-http-request: 600s
-              ingress.kubernetes.io/rewrite-target: /
-              meta.helm.sh/release-name: apiserver
-              meta.helm.sh/release-namespace: ${NAMESPACE}
-            enabled: true
-            hosts:
-            - host: ${EXTERNAL_HOST}
-              paths:
-              - path: /
-                pathType: Prefix
-    flags:
-      install: true
-      createNamespace: true
-      dependencyUpdate: true
+    - name: artifactmanager
+      namespace: ${NAMESPACE}
+      repository:
+        git:
+          host: https://github.com/sasahoo-tibco/tp-integration.git
+          path: /helm/charts/artifactmanager
+          branch: main
+      values:
+        - content: |
+            global:
+              artifactmanager:
+                data:
+                  namspace: ${NAMESPACE}
+                image:
+                  registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
+                  tag: 11-m1-ext
+            ingress:
+              annotations:
+                haproxy.org/cors-enable: "true"
+                haproxy.org/load-balance: leastconn
+                haproxy.org/src-ip-header: X-Real-IP
+                haproxy.org/timeout-http-request: 600s
+                ingress.kubernetes.io/rewrite-target: /
+                meta.helm.sh/release-name: artifactmanager
+                meta.helm.sh/release-namespace: ${NAMESPACE}
+              enabled: true
+              hostsOverride: false
+            volumes:
+              artifactmanager:
+                persistentVolumeClaim:
+                  create: true
+                  storageClassName: ${STORAGE_CLASS_NAME}
+      flags:
+        install: true
+        createNamespace: true
+        dependencyUpdate: true
+    - name: apiserver
+      namespace: ${NAMESPACE}
+      repository:
+        git:
+          host: https://github.com/sasahoo-tibco/tp-integration.git
+          path: /helm/charts/apiserver
+          branch: main
+      values:
+        - content: |
+            global:
+              apiserver:
+                data:
+                  namspace: ${NAMESPACE}
+                image:
+                  registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
+                  tag: 7-m1-ext
+            ingress:
+              annotations:
+                haproxy.org/cors-enable: "true"
+                haproxy.org/load-balance: leastconn
+                haproxy.org/src-ip-header: X-Real-IP
+                haproxy.org/timeout-http-request: 600s
+                ingress.kubernetes.io/rewrite-target: /
+                meta.helm.sh/release-name: apiserver
+                meta.helm.sh/release-namespace: ${NAMESPACE}
+              enabled: true
+              hostsOverride: false
+            ingressExternal:
+              annotations:
+                haproxy.org/cors-enable: "true"
+                haproxy.org/load-balance: leastconn
+                haproxy.org/src-ip-header: X-Real-IP
+                haproxy.org/timeout-http-request: 600s
+                ingress.kubernetes.io/rewrite-target: /
+                meta.helm.sh/release-name: apiserver
+                meta.helm.sh/release-namespace: ${NAMESPACE}
+              enabled: true
+              hosts:
+                - host: ${EXTERNAL_HOST}
+                  paths:
+                  - path: /
+                    pathType: Prefix
+      flags:
+        install: true
+        createNamespace: true
+        dependencyUpdate: true
  ```
 
 

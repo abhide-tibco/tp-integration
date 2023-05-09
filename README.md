@@ -82,9 +82,6 @@ Repeat for each of the charts.
                   storageClassName: ${STORAGE_CLASS_NAME}
                   accessModes:
                     - ReadWriteOnce
-                  resources:
-                    requests:
-                      storage: ${STORAGE_SIZE}
       flags:
         install: true
         createNamespace: true
@@ -137,9 +134,6 @@ Repeat for each of the charts.
                 create: true
               # Storage details needs to provided  
               storageClassName: ${STORAGE_CLASS_NAME} # Storage Class Name is compulsory
-              resources:
-                requests:
-                  storage: ${STORAGE_SIZE} # Storage size should be provided
  - name: apiserver
     namespace: ${NAMESPACE}
     repository:

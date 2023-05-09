@@ -39,49 +39,69 @@ You can package the provided charts, one by one, by following these steps from e
 
 Repeat for each of the charts.
 
-## Recipe for BWCE Capabilities
+## Recipe for BWCE Capability
+
 - [BWCE Capabilities](https://github.com/sasahoo-tibco/tp-integration/blob/main/helm/recipe/bwce-capabilities.yaml): TIBCO Platform Integration bwce capabilties recipe.
 #### Example of the recipe
 ```bash
+  capabilityId: TETRIS
+  version: 1.0.0
+  recipe:
+    helmCharts:
+    - name: bwprovisioner
+      namespace: ${NAMESPACE}
+      repository:
+        git:
+          host: https://github.com/sasahoo-tibco/tp-integration.git
+          path: /helm/charts/bwprovisioner
+          branch: main
+      values:
+        - content: |
+            global:
+              bwprovisioner:
+                data:
+                  namspace: ${NAMESPACE}
+                image:
+                  registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
+                  tag: 38-m1-ext
+            ingress:
+              annotations:
+                haproxy.org/cors-enable: "true"
+                haproxy.org/load-balance: leastconn
+                haproxy.org/src-ip-header: X-Real-IP
+                haproxy.org/timeout-http-request: 600s
+                ingress.kubernetes.io/rewrite-target: /
+                meta.helm.sh/release-name: bwprovisioner
+                meta.helm.sh/release-namespace: ${NAMESPACE}
+              enabled: true
+              hostsOverride: false
+            volumes:
+              bwprovisioner:
+                persistentVolumeClaim:
+                  create: true
+                  storageClassName: ${STORAGE_CLASS_NAME}
+                  accessModes:
+                    - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: ${STORAGE_SIZE}
+      flags:
+        install: true
+        createNamespace: true
+        dependencyUpdate: true
+  isDevTesting: true
+  status: deployed
+  region: us-west-2
+  tags:
+    - Tag1
+    - Tag2
+
+ ```
+
+## Recipe for Core Capabilities
+
+```bash
   helmCharts:
-  - name: bwprovisioner
-    namespace: ${NAMESPACE}
-    repository:
-      git:
-        host: https://github.com/sasahoo-tibco/tp-integration.git
-        path: /helm/charts/bwprovisioner
-        branch: ${BRANCH}
-    values:
-      - content: |
-          global:
-            bwprovisioner:
-              data:
-                namspace: ${NAMESPACE}
-              image:
-                registry: 664529841144.dkr.ecr.ap-southeast-2.amazonaws.com
-                tag: 35-m1-ext
-          ingress:
-            annotations:
-              haproxy.org/cors-enable: "true"
-              haproxy.org/load-balance: leastconn
-              haproxy.org/src-ip-header: X-Real-IP
-              haproxy.org/timeout-http-request: 600s
-              ingress.kubernetes.io/rewrite-target: /
-              meta.helm.sh/release-name: bwprovisioner
-              meta.helm.sh/release-namespace: ${NAMESPACE}
-            enabled: true
-            hostsOverride: false
-          volumes:
-            bwprovisioner:
-              # subPath is optional, if empty, default path will be used   
-              subPath: ""
-              persistentVolumeClaim:
-                create: true
-              # Storage details needs to provided   
-              storageClassName: ${STORAGE_CLASS_NAME} # Storage Class Name is compulsory
-              resources:
-                requests:
-                  storage: ${STORAGE_SIZE} # Storage size should be provided
   - name: artifactmanager
     namespace: ${NAMESPACE}
     repository:

@@ -189,7 +189,7 @@ volumes:
           storage: 1Gi
 
       accessModes:
-        - ReadWriteMany
+        - ReadWriteOnce
 
       volumeMode: Filesystem
 

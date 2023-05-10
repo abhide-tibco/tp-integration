@@ -154,6 +154,7 @@ Repeat for each of the charts.
                 meta.helm.sh/release-name: apiserver
                 meta.helm.sh/release-namespace: ${NAMESPACE}
               enabled: true
+              className: ${INGRESS_CLASS_NAME}
               hosts:
                 - host: ${EXTERNAL_HOST}
                   paths:

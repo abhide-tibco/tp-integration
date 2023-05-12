@@ -48,10 +48,9 @@ Selector labels
 {{- define "artifactmanager.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "artifactmanager.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-dp.integration.app/type: "capability"
-dp.integration.capability/name: "artifactmanager"
-dp.integration.capability/instanceId: {{ .Values.global.cp.instanceId }}
-dp.integration.capability/dataplaneId: {{ .Values.global.cp.dataplaneId }}
+integration.platform.tibco.com/appType: "capability"
+platform.tibco.com/instanceID: {{ .Values.global.cp.instanceId }}
+platform.tibco.com/dataplaneID: {{ .Values.global.cp.dataplaneId }}
 {{- end }}
 
 {{/*
@@ -78,3 +77,5 @@ Integration storage folder pvc name
 {{- define "artifactmanager.storage.pvc.name" -}}
 {{- include "artifactmanager.persistentVolumeClaim.claimName" (dict "existingClaim" .Values.volumes.artifactmanager.existingClaim "releaseName" ( include "artifactmanager.fullname" . ) "volumeName" "integration" ) -}}
 {{- end -}}
+
+{{{- define "artifactmanager.cp.domain" }}cp-proxy.tibco-dp-{{ .Values.global.cp.dataplaneId }}.svc.cluster.local{{ end -}}

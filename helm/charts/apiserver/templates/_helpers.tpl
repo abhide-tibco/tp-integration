@@ -48,10 +48,9 @@ Selector labels
 {{- define "apiserver.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "apiserver.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-dp.integration.app/type: "capability"
-dp.integration.capability/name: "apiserver"
-dp.integration.capability/instanceId: {{ .Values.global.cp.instanceId }}
-dp.integration.capability/dataplaneId: {{ .Values.global.cp.dataplaneId }}
+integration.platform.tibco.com/appType: "capability"
+platform.tibco.com/instanceID: {{ .Values.global.cp.instanceId }}
+platform.tibco.com/dataplaneID: {{ .Values.global.cp.dataplaneId }}
 {{- end }}
 
 {{/*
@@ -64,3 +63,5 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{{- define "apiserver.cp.domain" }}cp-proxy.tibco-dp-{{ .Values.global.cp.dataplaneId }}.svc.cluster.local{{ end -}}

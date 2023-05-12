@@ -48,10 +48,9 @@ Selector labels
 {{- define "bwprovisioner.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "bwprovisioner.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-dp.integration.app/type: "capability"
-dp.integration.capability/name: "bwprovisioner"
-dp.integration.capability/instanceId: {{ .Values.global.cp.instanceId }}
-dp.integration.capability/dataplaneId: {{ .Values.global.cp.dataplaneId }}
+integration.platform.tibco.com/appType: "capability"
+platform.tibco.com/instanceID: {{ .Values.global.cp.instanceId }}
+platform.tibco.com/dataplaneID: {{ .Values.global.cp.dataplaneId }}
 {{- end }}
 
 {{/*
@@ -78,3 +77,5 @@ Integration storage folder pvc name
 {{- define "bwprovisioner.storage.pvc.name" -}}
 {{- include "bwprovisioner.persistentVolumeClaim.claimName" (dict "existingClaim" .Values.volumes.bwprovisioner.existingClaim "releaseName" ( include "bwprovisioner.fullname" . ) "volumeName" "integration" ) -}}
 {{- end -}}
+
+{{{- define "bwprovisioner.cp.domain" }}cp-proxy.tibco-dp-{{ .Values.global.cp.dataplaneId }}.svc.cluster.local{{ end -}}

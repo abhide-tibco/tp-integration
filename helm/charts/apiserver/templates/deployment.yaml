@@ -60,6 +60,8 @@ spec:
               value: {{ .Values.global.cp.instanceId }}
             - name: SERVER_PORT
               value: "{{ .Values.service.port }}"
+            - name: CP_DOMAIN
+              value: {{ include "apiserver.cp.domain" . }}
         {{- if .Values.global.apiserver.logging.enabled }}
         - name: fluent-bit
           image: {{ .Values.global.apiserver.logging.image.registry }}/tci/fluent-bit:{{ .Values.global.apiserver.logging.image.registry.tag }}

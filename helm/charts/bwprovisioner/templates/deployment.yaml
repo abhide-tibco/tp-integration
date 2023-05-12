@@ -76,6 +76,8 @@ spec:
               value: {{ .Values.global.cp.instanceId }}
             - name: SERVER_PORT
               value: "{{ .Values.service.port }}"
+            - name: CP_DOMAIN
+              value: {{ include "bwprovisioner.cp.domain" . }}
         {{- if .Values.global.bwprovisioner.deploymanager.enabled }}
         - name: deploymanager
           image: {{ .Values.global.bwprovisioner.deploymanager.image.registry }}/tci/tci-app-proxy:{{ .Values.global.bwprovisioner.deploymanager.image.tag }}

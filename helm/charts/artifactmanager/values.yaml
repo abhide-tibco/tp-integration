@@ -3,6 +3,11 @@
 # Declare variables to be passed into your templates.
 
 global:
+  cic:
+    data:
+      SYSTEM_WHERE: "local"
+      SYSTEM_WHO: "local"
+      SYSTEM_DOCKER_REGISTRY: "reldocker.tibco.com"
   cp:
     dataplaneId: dp-dp1
     instanceId: defaultinstid

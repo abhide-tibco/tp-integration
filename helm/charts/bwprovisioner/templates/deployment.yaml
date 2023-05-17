@@ -41,7 +41,7 @@ spec:
               name: server
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ .Values.global.bwprovisioner.image.registry }}/piap/bw-provisioner:{{ .Values.global.bwprovisioner.image.tag }}
+          image: {{ .Values.global.cic.data.SYSTEM_DOCKER_REGISTRY }}/piap/bw-provisioner:{{ .Values.global.bwprovisioner.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: data
@@ -80,7 +80,7 @@ spec:
               value: {{ include "bwprovisioner.cp.domain" . }}
         {{- if .Values.global.bwprovisioner.deploymanager.enabled }}
         - name: deploymanager
-          image: {{ .Values.global.bwprovisioner.deploymanager.image.registry }}/tci/tci-app-proxy:{{ .Values.global.bwprovisioner.deploymanager.image.tag }}
+          image: {{ .Values.global.cic.data.SYSTEM_DOCKER_REGISTRY }}/tci/tci-app-proxy:{{ .Values.global.bwprovisioner.deploymanager.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
             {{- toYaml .Values.global.bwprovisioner.deploymanager.resources | nindent 12 }}

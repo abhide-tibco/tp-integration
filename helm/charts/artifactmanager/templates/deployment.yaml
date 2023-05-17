@@ -41,7 +41,7 @@ spec:
               name: server
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ .Values.global.artifactmanager.image.registry }}/piap/orchestrator:{{ .Values.global.artifactmanager.image.tag }}
+          image: {{ .Values.global.cic.data.SYSTEM_DOCKER_REGISTRY }}/piap/orchestrator:{{ .Values.global.artifactmanager.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: data
@@ -80,7 +80,7 @@ spec:
               value: {{ include "artifactmanager.cp.domain" . }}
         {{- if .Values.global.artifactmanager.deploymanager.enabled }}
         - name: deploymanager
-          image: {{ .Values.global.artifactmanager.deploymanager.image.registry }}/tci/tci-app-proxy:{{ .Values.global.artifactmanager.deploymanager.image.tag }}
+          image: {{ .Values.global.cic.data.SYSTEM_DOCKER_REGISTRY }}/tci/tci-app-proxy:{{ .Values.global.artifactmanager.deploymanager.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
             {{- toYaml .Values.global.artifactmanager.deploymanager.resources | nindent 12 }}

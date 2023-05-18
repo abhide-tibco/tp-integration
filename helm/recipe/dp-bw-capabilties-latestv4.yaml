@@ -15,7 +15,7 @@ recipe:
                   namspace: ${NAMESPACE}
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-                  tag: 38-m1-ext
+                  tag: 47-m1-ext
             ingress:
               annotations:
                 haproxy.org/cors-enable: "true"
@@ -32,6 +32,8 @@ recipe:
                 persistentVolumeClaim:
                   create: true
                   storageClassName: ${STORAGE_CLASS_NAME}
+            config:
+              SOURCE_REGISTRY: "664529841144.dkr.ecr.us-west-2.amazonaws.com"
       flags:
         install: true
         createNamespace: true
@@ -51,7 +53,7 @@ recipe:
                   namspace: ${NAMESPACE}
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-                  tag: 11-m1-ext
+                  tag: 13-m1-ext
             ingress:
               annotations:
                 haproxy.org/cors-enable: "true"

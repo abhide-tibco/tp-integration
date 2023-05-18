@@ -84,7 +84,7 @@ service:
 #  #      - chart-example.local
 
 ingress:
-  # -- Enables configuration of ingress to expose flogoprovisioner. Requires ingress support in the Kubernetes cluster.
+  # -- Enables configuration of ingress to expose bwprovisioner. Requires ingress support in the Kubernetes cluster.
   enabled: false
   hostsOverride: false
   className: haproxy
@@ -206,3 +206,5 @@ volumes:
 
     # -- When `persistentVolumeClaim.create` is `false`, then use this value to define an already-existing PVC.
     existingClaim: ""
+rbac:
+  enabled: true

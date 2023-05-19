@@ -1,3 +1,5 @@
+capabilityId: BWCE
+version: 1.0.0
 recipe:
   helmCharts:
     - name: bwprovisioner
@@ -120,4 +122,10 @@ recipe:
         install: true
         createNamespace: true
         dependencyUpdate: true
+        isDevTesting: true
+status: deployed
+region: us-west-2
+tags:
+  - Tag1
+  - Tag2
 

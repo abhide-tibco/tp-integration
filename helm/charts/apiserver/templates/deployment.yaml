@@ -24,7 +24,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "apiserver.serviceAccountName" . }}
+      {{- if .Values.rbac.enabled }}
+      serviceAccountName: {{ include "apiserver.sa" . }}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

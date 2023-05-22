@@ -65,3 +65,5 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "apiserver.cp.domain" }}cp-proxy.tibco-dp-{{ .Values.global.cp.dataplaneId }}.svc.cluster.local{{ end -}}
+
+{{- define "apiserver.sa" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-sa{{ end -}}

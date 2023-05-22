@@ -79,3 +79,5 @@ Integration storage folder pvc name
 {{- end -}}
 
 {{- define "artifactmanager.cp.domain" }}cp-proxy.tibco-dp-{{ .Values.global.cp.dataplaneId }}.svc.cluster.local{{ end -}}
+
+{{- define "artifactmanager.sa" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-sa{{ end -}}

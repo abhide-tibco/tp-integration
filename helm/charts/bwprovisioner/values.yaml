@@ -175,6 +175,7 @@ config:
   DP_INTERNAL_URL: "***NOT AVAILABLE***"
   BWCE_BASE_VERSION: "5-2.8.1-V47.0.1-GA-m1-ext"
   ARTIFACT_MANAGER_PORT: "7813"
+  APP_INIT_IMAGE_TAG: "4-m1"
 
 volumes:
   bwprovisioner:

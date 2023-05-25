@@ -48,9 +48,10 @@ Selector labels
 {{- define "bwprovisioner.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "bwprovisioner.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-integration.platform.tibco.com/appType: "capability"
-platform.tibco.com/instanceID: {{ .Values.global.cp.instanceId }}
-platform.tibco.com/dataplaneID: {{ .Values.global.cp.dataplaneId }}
+app.kubernetes.io/part-of: "bwprovisioner"
+platform.tibco.com/workflow-type: "capability-service"
+platform.tibco.com/capability-instance-id: {{ .Values.global.cp.instanceId }}
+platform.tibco.com/dataplane-id: {{ .Values.global.cp.dataplaneId }}
 {{- end }}
 
 {{/*

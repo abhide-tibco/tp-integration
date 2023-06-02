@@ -48,8 +48,8 @@ Selector labels
 {{- define "apiserver.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "apiserver.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/part-of: "bwprovisioner"
-platform.tibco.com/workflow-type: "capability-service"
+app.kubernetes.io/part-of: "bwce"
+platform.tibco.com/workflow-type: "services/user-apps"
 platform.tibco.com/capability-instance-id: {{ .Values.global.cp.instanceId }}
 platform.tibco.com/dataplane-id: {{ .Values.global.cp.dataplaneId }}
 {{- end }}

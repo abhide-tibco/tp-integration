@@ -1,0 +1,13 @@
+{{- if .Values.highAvailabilityMode }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "dp-core-distributed-lock-operator.consts.appName" . }}-pdb
+  labels:
+    {{- include "dp-core-distributed-lock-operator.shared.labels.standard" . | nindent 4 }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      {{- include "dp-core-distributed-lock-operator.shared.labels.selector" . | nindent 6 }}
+{{- end }}

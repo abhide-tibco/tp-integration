@@ -1,0 +1,83 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dp-core-distributed-lock-operator.consts.appName" . }}
+  labels:
+    {{- include "dp-core-distributed-lock-operator.shared.labels.standard" . | nindent 4 }}
+spec:
+  replicas: {{ include "dp-core-distributed-lock-operator.shared.func.replicaCount" . }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "dp-core-distributed-lock-operator.shared.labels.selector" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dp-core-distributed-lock-operator.shared.labels.standard" . | nindent 8 }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: /metrics
+    spec:
+      serviceAccountName: {{ include "dp-core-distributed-lock-operator.consts.appName" . }}
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+      - name: distributed-lock-operator
+        image: {{ .Values.global.dockerRegistry }}/stratosphere/distributed-lock-operator:{{ include "dp-core-distributed-lock-operator.generated.buildNumber" . }}
+        {{- if ne .Values.global.where (include "dp-core-distributed-lock-operator.shared.global.where.local" .) }}
+        {{- if eq .Values.global.scale (include "dp-core-distributed-lock-operator.shared.global.scale.minimal" .) }}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+        {{- else }}
+        resources:
+          requests:
+            cpu: 200m
+            memory: 200Mi
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+        {{- end }}
+        {{- end }}
+        {{- if .Values.highAvailabilityMode }}
+        args:
+          - --leader-elect
+        {{- end }}
+        ports:
+          - containerPort: 8080
+            name: metrics
+          - containerPort: 9443
+            name: webhook
+        imagePullPolicy: Always
+        env:
+          - name: WATCH_NAMESPACE_PREFIX
+            value: {{ .Values.global.who }}-tibco-
+          - name: ENABLE_WEBHOOKS
+            value: "{{ .Values.enableWebHooks }}"
+          - name: SETTINGS_PROPERTIES_VOLUME_PATH
+            value: "/etc/config/settings.properties"
+{{- if .Values.enableWebHooks }}
+        volumeMounts:
+          - mountPath: /tmp/k8s-webhook-server/serving-certs
+            name: cert
+            readOnly: true
+          - name: settings-config-volume
+            mountPath: "/etc/config"
+{{- end }}
+      volumes:
+{{- if .Values.enableWebHooks }}
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: {{ include "dp-core-distributed-lock-operator.consts.webhook" . }}-tls
+{{- end }}
+        - name: settings-config-volume
+          configMap:
+            name: {{ include "dp-core-distributed-lock-operator.consts.appName" . }}-settings

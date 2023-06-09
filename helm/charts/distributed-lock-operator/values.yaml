@@ -1,0 +1,18 @@
+enableWebHooks: true
+
+# if enabled distributed-lock-operator will have two replicas and podDisruptionBudget
+highAvailabilityMode: false
+
+settingsConfigmap:
+  - key: "LOG_LEVEL"
+    value: "info"
+  - key: "LOCK_EXPIRY_DURATION"
+    value: "2m"
+
+global:
+  where: "local"
+  who: "local"
+  scale: "minimal"
+  security: "defaulted"
+  dockerRegistry: "reldocker.tibco.com"
+  enableLogging: true

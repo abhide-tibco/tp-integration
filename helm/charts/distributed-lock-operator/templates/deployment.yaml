@@ -26,7 +26,7 @@ spec:
         kubernetes.io/os: linux
       containers:
       - name: distributed-lock-operator
-        image: {{ .Values.global.dockerRegistry }}/stratosphere/distributed-lock-operator:{{ include "dp-core-distributed-lock-operator.generated.buildNumber" . }}
+        image: {{ .Values.global.dockerRegistry }}/stratosphere/distributed-lock-operator:{{ .Values.global.buildNumber }}
         {{- if ne .Values.global.where (include "dp-core-distributed-lock-operator.shared.global.where.local" .) }}
         {{- if eq .Values.global.scale (include "dp-core-distributed-lock-operator.shared.global.scale.minimal" .) }}
         resources:
@@ -58,7 +58,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: WATCH_NAMESPACE_PREFIX
-            value: {{ .Values.global.who }}-tibco-
+            value: tibco-dp-
           - name: ENABLE_WEBHOOKS
             value: "{{ .Values.enableWebHooks }}"
           - name: SETTINGS_PROPERTIES_VOLUME_PATH

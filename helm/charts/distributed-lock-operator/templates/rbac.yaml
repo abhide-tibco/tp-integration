@@ -142,4 +142,5 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ include "dp-core-distributed-lock-operator.consts.appName" . }}
+  namespace: {{ include "dp-core-distributed-lock-operator.consts.namespace" . }}
 

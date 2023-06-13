@@ -98,7 +98,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion }}
 {{- define "dp-core-distributed-lock-operator.consts.team" }}cic-compute{{ end -}}
 
 {{/* Namespace we're going into. */}}
-{{- define "dp-core-distributed-lock-operator.consts.namespace" }}{{ .Values.global.who }}-tibco-system{{ end -}}
+{{- define "dp-core-distributed-lock-operator.consts.namespace" }}tibco-dp-{{ .Values.global.cp.dataplaneId }}{{ end -}}
 
 {{- define "dp-core-distributed-lock-operator.consts.webhook" }}{{ .Values.global.who }}-distributed-lock-operator-webhook{{ end -}}
 

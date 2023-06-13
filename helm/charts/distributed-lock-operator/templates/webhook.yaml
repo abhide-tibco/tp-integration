@@ -13,6 +13,7 @@ webhooks:
     caBundle: Cg==
     service:
       name: {{ include "dp-core-distributed-lock-operator.consts.webhook" . }}
+      namespace: {{ include "dp-core-distributed-lock-operator.consts.namespace" . }}
       path: /validate-cloud-tibco-com-v1-tibcodistributedlock
   failurePolicy: Fail
   admissionReviewVersions: 

@@ -20,7 +20,7 @@ recipe:
                   namspace: ${NAMESPACE}
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-                  tag: 105
+                  tag: 107
             ingress:
               annotations:
                 haproxy.org/cors-enable: "true"
@@ -58,7 +58,7 @@ recipe:
                   namspace: ${NAMESPACE}
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-                  tag: 16-m1-ext
+                  tag: 18-m1-ext
             ingress:
               annotations:
                 haproxy.org/cors-enable: "true"

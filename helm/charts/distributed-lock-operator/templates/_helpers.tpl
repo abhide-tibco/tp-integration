@@ -1,22 +1,41 @@
 {{/*
+   Copyright (c) 2023 Cloud Software Group, Inc.
+   All Rights Reserved.
+
+   File       : _helpers.tpl
+   Version    : 1.0.0
+   Description: Template helpers that can be shared with other charts.
+
+    NOTES:
+      - Helpers below are making some assumptions regarding files Chart.yaml and values.yaml. Change carefully!
+      - Any change in this file needs to be synchronized with all charts
+*/}}
+
+{{/*
     ===========================================================================
-    SECTION: possible values for enumeration types in the global variables defined in values.yaml
+    SECTION: consts
     ===========================================================================
 */}}
 
-{{/* Global variable: .Values.global.where. */}}
-{{- define "dp-core-distributed-lock-operator.shared.global.where.local" }}local{{ end -}}
-{{- define "dp-core-distributed-lock-operator.shared.global.where.aws" }}aws{{ end -}}
-{{- define "dp-core-distributed-lock-operator.shared.global.where.azure" }}azure{{ end -}}
-{{- define "dp-core-distributed-lock-operator.shared.global.where.hybrid" }}hybrid{{ end -}}
+{{/* A fixed short name for the application. Can be different than the chart name */}}
+{{- define "dp-core-distributed-lock-operator.consts.appName" }}distributed-lock-operator{{ end -}}
 
-{{/* Global variable: .Values.global.scale. */}}
-{{- define "dp-core-distributed-lock-operator.shared.global.scale.minimal" }}minimal{{ end -}}
-{{- define "dp-core-distributed-lock-operator.shared.global.scale.production" }}production{{ end -}}
+{{/* Tenant name. */}}
+{{- define "dp-core-distributed-lock-operator.consts.tenantName" }}infrastructure{{ end -}}
 
-{{/* Global variable: .Values.global.security. */}}
-{{- define "dp-core-distributed-lock-operator.shared.global.security.defaulted" }}defaulted{{ end -}}
-{{- define "dp-core-distributed-lock-operator.shared.global.security.restricted" }}restricted{{ end -}}
+{{/* Component we're a part of. */}}
+{{- define "dp-core-distributed-lock-operator.consts.component" }}dataplane{{ end -}}
+
+{{/* Team we're a part of. */}}
+{{- define "dp-core-distributed-lock-operator.consts.team" }}cic-compute{{ end -}}
+
+{{- define "dp-core-distributed-lock-operator.consts.webhook" }}{{ .Values.global.tibco.dataPlaneId }}-distributed-lock-operator-webhook{{ end -}}
+
+{{/* Data plane workload type */}}
+{{- define "dp-core-distributed-lock-operator.consts.workloadType" }}infra{{ end -}}
+
+{{/* Namespace we're going into. */}}
+{{- define "dp-core-distributed-lock-operator.consts.namespace" }}tibco-dp-{{ .Values.global.cp.dataplaneId }}{{ end -}}
 
 {{/*
     ===========================================================================
@@ -38,7 +57,6 @@ app.kubernetes.io/component: {{ include "dp-core-distributed-lock-operator.const
 app.kubernetes.io/part-of: {{ include "dp-core-distributed-lock-operator.consts.team" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.cloud.tibco.com/owner: {{ .Values.global.who }}
 {{- end -}}
 
 {{/*
@@ -47,58 +65,21 @@ Includes labels used as selectors (i.e. template "labels.selector")
 */}}
 {{- define "dp-core-distributed-lock-operator.shared.labels.standard" -}}
 {{ include  "dp-core-distributed-lock-operator.shared.labels.selector" . }}
+{{ include "dp-core-distributed-lock-operator.shared.labels.platform" . }}
 app.cloud.tibco.com/created-by: {{ include "dp-core-distributed-lock-operator.consts.team" . }}
+app.cloud.tibco.com/build-timestamp: {{ include "dp-core-distributed-lock-operator.generated.buildTimestamp" . }}
 app.cloud.tibco.com/tenant-name: {{ include "dp-core-distributed-lock-operator.consts.tenantName" . }}
-{{- /* COST LABEL -- If supplied and cost label set, cost label with tenant name as value will be added. */}}
-{{- /*               If override is specified and cost allocation is set, cost allocation value will override tenant name. */}}
-{{- if .Values.global.ownershipCostLabel }}
-{{- if ne .Values.global.ownershipCostLabel "" }}
-{{- if and .Values.global.ownershipCostAllocationTenantOverride .Values.global.ownershipCostAllocation }}
-{{ .Values.global.ownershipCostLabel }}: "{{ .Values.global.ownershipCostAllocation }}"
-{{- else }}
-{{ .Values.global.ownershipCostLabel }}: {{ include "dp-core-distributed-lock-operator.consts.tenantName" . }}
-{{- end }}
-{{- end }}
-{{- end }}
 helm.sh/chart: {{ include "dp-core-distributed-lock-operator.shared.labels.chartLabelValue" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion }}
 {{- end -}}
 
-{{/*
-    ===========================================================================
-    SECTION: general purpose functions
-    ===========================================================================
-*/}}
+{{/* Platform labels to be added in all the resources created by this chart.*/}}
+{{- define "dp-core-distributed-lock-operator.shared.labels.platform" -}}
+platform.tibco.com/dataplane-id: {{ .Values.global.tibco.dataPlaneId }}
+platform.tibco.com/workload-type: {{ include "dp-core-distributed-lock-operator.consts.workloadType" .}}
+{{- end }}
 
 {{/* Global resource prefix. */}}
 {{- define "dp-core-distributed-lock-operator.shared.func.globalResourcePrefix" -}}
-{{ .Values.global.who }}-{{ include "dp-core-distributed-lock-operator.consts.appName" . }}-
+{{ .Values.global.tibco.dataPlaneId }}-{{ include "dp-core-distributed-lock-operator.consts.appName" . }}-
 {{- end -}}
-
-{{/* Number of replicas computed depending on current value of .Values.global.scale */}}
-{{- define "dp-core-distributed-lock-operator.shared.func.replicaCount" -}}
-  {{- if .Values.highAvailabilityMode -}}
-    {{- 2 -}}
-  {{- else -}}
-    {{- 1 -}}
-  {{- end -}}
-{{- end -}}
-
-
-{{/* A fixed short name for the application. Can be different than the chart name */}}
-{{- define "dp-core-distributed-lock-operator.consts.appName" }}distributed-lock-operator{{ end -}}
-
-{{/* Tenant name. */}}
-{{- define "dp-core-distributed-lock-operator.consts.tenantName" }}infrastructure{{ end -}}
-
-{{/* Component we're a part of. */}}
-{{- define "dp-core-distributed-lock-operator.consts.component" }}dataplane{{ end -}}
-
-{{/* Team we're a part of. */}}
-{{- define "dp-core-distributed-lock-operator.consts.team" }}cic-compute{{ end -}}
-
-{{/* Namespace we're going into. */}}
-{{- define "dp-core-distributed-lock-operator.consts.namespace" }}tibco-dp-{{ .Values.global.cp.dataplaneId }}{{ end -}}
-
-{{- define "dp-core-distributed-lock-operator.consts.webhook" }}{{ .Values.global.who }}-distributed-lock-operator-webhook{{ end -}}
-

@@ -1,19 +1,11 @@
 global:
-  where: "local"
-  who: "tibco-dp"
-  scale: "minimal"
-  security: "defaulted"
-  dockerRegistry: "664529841144.dkr.ecr.us-west-2.amazonaws.com"
   enableLogging: true
-  buildNumber: 55
-  cp:
-    dataplaneId: dp2
-    instanceId: defaultinstid
+  serviceAccount: "" #user provided service account.
+  image:
+    registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
+    tag: latest
 
 enableWebHooks: true
-
-# if enabled distributed-lock-operator will have two replicas and podDisruptionBudget
-highAvailabilityMode: false
 
 settingsConfigmap:
   - key: "LOG_LEVEL"

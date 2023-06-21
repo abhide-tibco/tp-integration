@@ -1,26 +1,26 @@
-capabilityId: CORE
+capabilityId: BWCE
 version:
   - 1
   - 0
   - 0
 recipe:
   helmCharts:
-    - name: artifactmanager
+    - name: bwprovisioner
       namespace: ${NAMESPACE}
       repository:
         git:
           host: https://github.com/sasahoo-tibco/tp-integration.git
-          path: /helm/charts/artifactmanager
+          path: /helm/charts/bwprovisioner
           branch: main
       values:
         - content: |
             global:
-              artifactmanager:
+              bwprovisioner:
                 data:
                   namspace: ${NAMESPACE}
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-                  tag: 18-m1-ext
+                  tag: 107
             ingress:
               annotations:
                 haproxy.org/cors-enable: "true"
@@ -28,33 +28,17 @@ recipe:
                 haproxy.org/src-ip-header: X-Real-IP
                 haproxy.org/timeout-http-request: 600s
                 ingress.kubernetes.io/rewrite-target: /
-                meta.helm.sh/release-name: artifactmanager
+                meta.helm.sh/release-name: bwprovisioner
                 meta.helm.sh/release-namespace: ${NAMESPACE}
               enabled: true
               hostsOverride: false
             volumes:
-              artifactmanager:
+              bwprovisioner:
                 persistentVolumeClaim:
                   create: true
                   storageClassName: ${STORAGE_CLASS_NAME}
-      flags:
-        install: true
-        createNamespace: true
-        dependencyUpdate: true
-        isDevTesting: false
-    - name: distributed-lock-operator
-      namespace: ${NAMESPACE}
-      repository:
-        git:
-          host: https://github.com/sasahoo-tibco/tp-integration.git
-          path: /helm/charts/distributed-lock-operator
-          branch: main
-      values:
-        - content: |
-            global:
-              image:
-                registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-                tag: latest
+            config:
+              SOURCE_REGISTRY: "664529841144.dkr.ecr.us-west-2.amazonaws.com"
       flags:
         install: true
         createNamespace: true

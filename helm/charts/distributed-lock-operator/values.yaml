@@ -3,7 +3,7 @@ global:
   serviceAccount: "" #user provided service account.
   image:
     registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-    tag: latest
+    tag: 58
 
 enableWebHooks: true
 

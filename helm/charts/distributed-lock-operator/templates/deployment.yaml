@@ -25,7 +25,7 @@ spec:
         kubernetes.io/os: linux
       containers:
       - name: distributed-lock-operator
-        image: {{ .Values.global.image.Registry }}/stratosphere/distributed-lock-operator:{{ .Values.global.image.tag }}
+        image: {{ .Values.global.image.registry }}/stratosphere/distributed-lock-operator:{{ .Values.global.image.tag }}
         ports:
           - containerPort: 8080
             name: metrics

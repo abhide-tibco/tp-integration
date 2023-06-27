@@ -29,7 +29,7 @@
 {{/* Team we're a part of. */}}
 {{- define "dp-core-distributed-lock-operator.consts.team" }}cic-compute{{ end -}}
 
-{{- define "dp-core-distributed-lock-operator.consts.webhook" }}{{ .Values.global.tibco.dataPlaneId }}-distributed-lock-operator-webhook{{ end -}}
+{{- define "dp-core-distributed-lock-operator.consts.webhook" }}{{ .Values.global.cp.dataplaneId }}-distributed-lock-operator-webhook{{ end -}}
 
 {{/* Data plane workload type */}}
 {{- define "dp-core-distributed-lock-operator.consts.workloadType" }}infra{{ end -}}
@@ -75,11 +75,11 @@ app.kubernetes.io/version: {{ .Chart.AppVersion }}
 
 {{/* Platform labels to be added in all the resources created by this chart.*/}}
 {{- define "dp-core-distributed-lock-operator.shared.labels.platform" -}}
-platform.tibco.com/dataplane-id: {{ .Values.global.tibco.dataPlaneId }}
+platform.tibco.com/dataplane-id: {{ .Values.global.cp.dataplaneId }}
 platform.tibco.com/workload-type: {{ include "dp-core-distributed-lock-operator.consts.workloadType" .}}
 {{- end }}
 
 {{/* Global resource prefix. */}}
 {{- define "dp-core-distributed-lock-operator.shared.func.globalResourcePrefix" -}}
-{{ .Values.global.tibco.dataPlaneId }}-{{ include "dp-core-distributed-lock-operator.consts.appName" . }}-
+{{ .Values.global.cp.dataplaneId }}-{{ include "dp-core-distributed-lock-operator.consts.appName" . }}-
 {{- end -}}

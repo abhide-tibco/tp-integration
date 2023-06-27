@@ -67,7 +67,6 @@ Includes labels used as selectors (i.e. template "labels.selector")
 {{ include  "dp-core-distributed-lock-operator.shared.labels.selector" . }}
 {{ include "dp-core-distributed-lock-operator.shared.labels.platform" . }}
 app.cloud.tibco.com/created-by: {{ include "dp-core-distributed-lock-operator.consts.team" . }}
-app.cloud.tibco.com/build-timestamp: {{ include "dp-core-distributed-lock-operator.generated.buildTimestamp" . }}
 app.cloud.tibco.com/tenant-name: {{ include "dp-core-distributed-lock-operator.consts.tenantName" . }}
 helm.sh/chart: {{ include "dp-core-distributed-lock-operator.shared.labels.chartLabelValue" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion }}

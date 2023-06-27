@@ -4,8 +4,12 @@ global:
   image:
     registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
     tag: 58
+  cp:
+    dataplaneId: ""
 
 enableWebHooks: true
+
+replicaCount: 1
 
 settingsConfigmap:
   - key: "LOG_LEVEL"

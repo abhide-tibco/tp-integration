@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "dp-core-distributed-lock-operator.shared.labels.standard" . | nindent 4 }}
 spec:
-  replicas: {{ include "dp-core-distributed-lock-operator.shared.func.replicaCount" . }}
+  replicas: {{ .Values.replicaCount }}
   strategy:
     type: Recreate
   selector:

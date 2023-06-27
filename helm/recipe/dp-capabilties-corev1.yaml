@@ -54,7 +54,7 @@ recipe:
             global:
               image:
                 registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-                tag: latest
+                tag: 58
       flags:
         install: true
         createNamespace: true

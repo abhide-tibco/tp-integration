@@ -24,7 +24,7 @@
 {{- define "dp-core-distributed-lock-operator.consts.component" }}dataplane{{ end -}}
 
 
-{{- define "dp-core-distributed-lock-operator.consts.webhook" }}{{ .Values.global.cp.dataplaneId }}-distributed-lock-operator-webhook{{ end -}}
+{{- define "dp-core-distributed-lock-operator.consts.webhook" }}tibco-dp-{{ .Values.global.cp.dataplaneId }}-distributed-lock-operator-webhook{{ end -}}
 
 {{/* Data plane workload type */}}
 {{- define "dp-core-distributed-lock-operator.consts.workloadType" }}infra{{ end -}}

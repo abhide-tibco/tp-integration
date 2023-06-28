@@ -1,0 +1,120 @@
+# Default values for artifactmanager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  cp:
+    dataplaneId: dp-dp1
+    instanceId: defaultinstid
+  logproxy:
+    data:
+      namespace: dp-integration-default
+    image:
+      registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
+      tag: 99
+
+replicaCount: 1
+
+serviceAccount:
+  enabled: false
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 7813
+  targetPort: 7813
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+#resources:
+#  requests:
+#    cpu: 50m
+#    memory: 128Mi
+#  limits:
+#    cpu: "2"
+#    memory: 2048Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+probes:
+  liveness:
+    initialDelaySeconds: 3
+    failureThreshold: 5
+    periodSeconds: 5
+    timeoutSeconds: 5
+
+# -- Additional environment variables.
+extraEnvVars: []
+#  - name: NAME
+#    value: value
+
+# The name of ConfigMap containing additional environment variables.
+extraEnvVarsCM: ""
+
+# The name of Secret containing extra additional environment variables.
+extraEnvVarsSecret: ""
+
+# -- Extra volumeMounts for the integration services container.
+# More info: `kubectl explain deployment.spec.template.spec.containers.volumeMounts`.
+extraVolumeMounts: []
+  # - name: example
+  #   mountPath: /opt/tibco/example.txt
+#   subPath: example.txt
+
+# -- Extra volumes for the integration services container.
+# More info: `kubectl explain deployment.spec.template.spec.volumes`.
+extraVolumes: []
+  # - name: example
+  #   persistentVolumeClaim:
+#     claimName: exampleClaim
+
+# -- Additional init containers to add to the automationservices pod.
+extraInitContainers: []
+  # - name: dummy-init
+  #   image: busybox
+#   command: ['echo', "hey"]
+
+config:
+  #  DP_INTERNAL_URL: "test.tci-env.ap-southeast-2.tcie.pro"
+  DP_INTERNAL_URL: "***NOT AVAILABLE***"
+  EFS_ROOT: "/data"
+

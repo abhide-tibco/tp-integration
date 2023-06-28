@@ -34,8 +34,7 @@ rules:
   resources:
   - tibcodistributedlocks
   - tibcodistributedlocks/status
-  verbs:
-  - '*'
+  verbs: ["get","list","watch","create","delete","patch","update"]
 - apiGroups:
   - ""
   resources:
@@ -64,10 +63,9 @@ roleRef:
   name: {{ include "dp-core-distributed-lock-operator.shared.func.globalResourcePrefix" . }}role
 subjects:
 - kind: ServiceAccount
-  {{- if eq .Values.global.serviceAccount "" }}
+  {{- if eq .Values.global.cp.distlockoperator.serviceAccount "" }}
   name: {{ include "dp-core-distributed-lock-operator.consts.appName" . }}
   {{- else }}
-  name: {{ .Values.global.serviceAccount }}
+  name: {{ .Values.global.cp.distlockoperator.serviceAccount }}
   {{- end }}
-  namespace: {{ include "dp-core-distributed-lock-operator.consts.namespace" . }}
 

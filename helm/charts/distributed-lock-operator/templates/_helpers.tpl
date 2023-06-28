@@ -20,14 +20,9 @@
 {{/* A fixed short name for the application. Can be different than the chart name */}}
 {{- define "dp-core-distributed-lock-operator.consts.appName" }}distributed-lock-operator{{ end -}}
 
-{{/* Tenant name. */}}
-{{- define "dp-core-distributed-lock-operator.consts.tenantName" }}infrastructure{{ end -}}
-
 {{/* Component we're a part of. */}}
 {{- define "dp-core-distributed-lock-operator.consts.component" }}dataplane{{ end -}}
 
-{{/* Team we're a part of. */}}
-{{- define "dp-core-distributed-lock-operator.consts.team" }}cic-compute{{ end -}}
 
 {{- define "dp-core-distributed-lock-operator.consts.webhook" }}{{ .Values.global.cp.dataplaneId }}-distributed-lock-operator-webhook{{ end -}}
 
@@ -54,7 +49,6 @@ Selector labels used by the resources in this chart
 {{- define "dp-core-distributed-lock-operator.shared.labels.selector" -}}
 app.kubernetes.io/name: {{ include "dp-core-distributed-lock-operator.consts.appName" . }}
 app.kubernetes.io/component: {{ include "dp-core-distributed-lock-operator.consts.component" . }}
-app.kubernetes.io/part-of: {{ include "dp-core-distributed-lock-operator.consts.team" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
@@ -66,8 +60,6 @@ Includes labels used as selectors (i.e. template "labels.selector")
 {{- define "dp-core-distributed-lock-operator.shared.labels.standard" -}}
 {{ include  "dp-core-distributed-lock-operator.shared.labels.selector" . }}
 {{ include "dp-core-distributed-lock-operator.shared.labels.platform" . }}
-app.cloud.tibco.com/created-by: {{ include "dp-core-distributed-lock-operator.consts.team" . }}
-app.cloud.tibco.com/tenant-name: {{ include "dp-core-distributed-lock-operator.consts.tenantName" . }}
 helm.sh/chart: {{ include "dp-core-distributed-lock-operator.shared.labels.chartLabelValue" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion }}
 {{- end -}}

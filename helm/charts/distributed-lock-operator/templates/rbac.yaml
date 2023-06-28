@@ -68,4 +68,5 @@ subjects:
   {{- else }}
   name: {{ .Values.global.cp.distlockoperator.serviceAccount }}
   {{- end }}
-
+- kind: ServiceAccount
+  name: tp-dp-{{ .Values.global.cp.dataplaneId }}-sa

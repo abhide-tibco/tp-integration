@@ -35,7 +35,6 @@ app.kubernetes.io/name: {{ include "tp-log-proxy.consts.appName" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: "bwce"
 platform.tibco.com/workload-type: "capability-service"
-platform.tibco.com/capability-instance-id: {{ .Values.global.cp.instanceId }}
 platform.tibco.com/dataplane-id: {{ .Values.global.cp.dataplaneId }}
 {{- end -}}
 

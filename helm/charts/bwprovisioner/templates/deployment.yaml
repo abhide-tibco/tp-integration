@@ -77,7 +77,7 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.service.port }}"
             - name: APP_INIT_IMAGE_TAG
-              value: "7-m1"
+              value: "8"
             - name: CP_DOMAIN
               value: {{ include "bwprovisioner.cp.domain" . }}
             - name: POD_NAMESPACE

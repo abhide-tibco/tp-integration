@@ -29,7 +29,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.rbac.enabled }}
+      {{- if .Values.global.bwprovisioner.serviceAccount }}
+      serviceAccountName: {{ .Values.global.bwprovisioner.serviceAccount }}
+      {{- else }}
       serviceAccountName: {{ include "bwprovisioner.sa" . }}
       {{- end }}
       securityContext:

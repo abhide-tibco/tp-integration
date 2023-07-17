@@ -88,7 +88,7 @@ Repeat for each of the charts.
                 SOURCE_REGISTRY: "664529841144.dkr.ecr.us-west-2.amazonaws.com"
         flags:
           install: true
-          createNamespace: true
+          createNamespace: false
           dependencyUpdate: true
       - name: artifactmanager
         namespace: ${NAMESPACE}
@@ -124,7 +124,7 @@ Repeat for each of the charts.
                     storageClassName: ${STORAGE_CLASS_NAME}
         flags:
           install: true
-          createNamespace: true
+          createNamespace: false
           dependencyUpdate: true
       - name: apiserver
         namespace: ${NAMESPACE}
@@ -170,7 +170,7 @@ Repeat for each of the charts.
                       pathType: Prefix
         flags:
           install: true
-          createNamespace: true
+          createNamespace: false
           dependencyUpdate: true
           isDevTesting: false
       - name: distributed-lock-operator
@@ -188,7 +188,7 @@ Repeat for each of the charts.
                   tag: 58
         flags:
           install: true
-          createNamespace: true
+          createNamespace: false
           dependencyUpdate: true
           isDevTesting: false
   status: deployed
@@ -244,7 +244,7 @@ Repeat for each of the charts.
                 SOURCE_REGISTRY: "664529841144.dkr.ecr.us-west-2.amazonaws.com"
         flags:
           install: true
-          createNamespace: true
+          createNamespace: false
           dependencyUpdate: true
           isDevTesting: false
   status: deployed

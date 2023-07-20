@@ -1,3 +1,4 @@
+{{- if .Values.rbac.create -}}
 {{- if eq .Values.global.flogoprovisioner.serviceAccount "" }}
 apiVersion: v1
 kind: ServiceAccount
@@ -44,3 +45,4 @@ roleRef:
   kind: Role
   name: {{ include "flogoprovisioner.role" . }}
   apiGroup: rbac.authorization.k8s.io
+{{- end }}

@@ -52,7 +52,7 @@ app.kubernetes.io/component: {{ include "dp-core-distributed-lock-operator.const
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: "core"
-platform.tibco.com/workload-type: "capability-service"
+platform.tibco.com/workload-type: {{ include "dp-core-distributed-lock-operator.consts.workloadType" .}}
 platform.tibco.com/dataplane-id: {{ .Values.global.cp.dataplaneId }}
 platform.tibco.com/capability-instance-id: {{ .Values.global.cp.instanceId }}
 {{- end -}}

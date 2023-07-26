@@ -9,7 +9,6 @@ metadata:
   name: {{ include "dp-core-distributed-lock-operator.consts.appName" . }}
   labels:
     {{- include "dp-core-distributed-lock-operator.shared.labels.standard" . | nindent 4 }}
-{{- end }}
 
 ---
 
@@ -71,3 +70,4 @@ subjects:
   name: {{ .Values.global.distlockoperator.serviceAccount }}
   {{- end }}
 
+{{- end }}

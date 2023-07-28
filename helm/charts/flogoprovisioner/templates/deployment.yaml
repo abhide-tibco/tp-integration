@@ -51,15 +51,6 @@ spec:
               {{- if .Values.volumes.flogoprovisioner.subPath }}
               subPath: {{ .Values.volumes.flogoprovisioner.subPath }}
               {{- end }}
-          livenessProbe:
-            httpGet:
-              scheme: HTTP
-              path: v1/liveness
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
-            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
-            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
-            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -79,7 +70,7 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.service.port }}"
             - name: APP_INIT_IMAGE_TAG
-              value: "8"
+              value: "10-flogo-m1"
             - name: CP_DOMAIN
               value: {{ include "flogoprovisioner.cp.domain" . }}
             - name: POD_NAMESPACE

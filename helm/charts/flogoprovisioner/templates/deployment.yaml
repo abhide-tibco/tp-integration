@@ -43,7 +43,7 @@ spec:
               name: server
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ .Values.global.flogoprovisioner.image.registry }}/piap/flogo-provisioner:19
+          image: {{ .Values.global.flogoprovisioner.image.registry }}/piap/flogo-provisioner:20
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: data

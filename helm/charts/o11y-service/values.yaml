@@ -6,7 +6,8 @@ global:
   cp:
     dataplaneId: dp-dp1
     instanceId: defaultinstid
-  logproxy:
+  o11yservice:
+    serviceAccount: ""
     data:
       namespace: dp-integration-default
     image:
@@ -14,6 +15,8 @@ global:
       tag: 99
 
 replicaCount: 1
+
+imagePullSecrets: []
 
 serviceAccount:
   enabled: false
@@ -40,8 +43,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 7813
-  targetPort: 7813
+  port: 8113
+  targetPort: 8113
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -118,3 +121,5 @@ config:
   DP_INTERNAL_URL: "***NOT AVAILABLE***"
   EFS_ROOT: "/data"
 
+image:
+  pullPolicy: IfNotPresent

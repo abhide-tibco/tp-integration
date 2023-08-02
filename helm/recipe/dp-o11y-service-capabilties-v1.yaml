@@ -1,0 +1,31 @@
+capabilityId: O11Y
+version:
+  - 1
+  - 0
+  - 0
+recipe:
+  helmCharts:
+    - name: o11yservice
+      namespace: ${NAMESPACE}
+      repository:
+        git:
+          host: https://github.com/sasahoo-tibco/tp-integration.git
+          path: /helm/charts/o11yservice
+          branch: main
+      values:
+        - content: |
+            global:
+              o11yservice:
+                image:
+                  registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
+                  tag: 109
+      flags:
+        install: true
+        createNamespace: false
+        dependencyUpdate: true
+status: deployed
+region: us-west-2
+tags:
+  - Tag1
+  - Tag2
+

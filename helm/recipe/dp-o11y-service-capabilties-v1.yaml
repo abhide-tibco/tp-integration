@@ -23,6 +23,7 @@ recipe:
         install: true
         createNamespace: false
         dependencyUpdate: true
+        isDevTesting: false
 status: deployed
 region: us-west-2
 tags:

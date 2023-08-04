@@ -178,36 +178,5 @@ config:
   ARTIFACT_MANAGER_PORT: "7813"
   APP_INIT_IMAGE_TAG: "5-m1"
 
-volumes:
-  flogoprovisioner:
-    volumePath: "/data/"
-    subPath: ""
-    persistentVolumeClaim:
-      # -- If `true`, then a `PersistentVolumeClaim` (PVC) is created.
-      create: true
-
-      # -- Specifies the name of the `StorageClass`
-      # in case of Kind/miniKube use "standard"
-      # in case of EKS/EBS "gp2"
-      # in case of EFS ""
-      storageClassName: ""
-
-      # -- Specifies the standard K8s resource requests and/or limits
-      resources:
-        requests:
-          storage: 1Gi
-
-      accessModes:
-        - ReadWriteOnce
-
-      volumeMode: Filesystem
-
-      # -- Specifies the name of the persistent volume
-      # If EBS/EFS if storage class given, keep volume name empty
-      volumeName: ""
-
-    # -- When `persistentVolumeClaim.create` is `false`, then use this value to define an already-existing PVC.
-    existingClaim: ""
-
 rbac:
   create: false

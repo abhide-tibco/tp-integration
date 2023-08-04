@@ -45,12 +45,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.global.flogoprovisioner.image.registry }}/piap/flogo-provisioner:21
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
-            - name: data
-              mountPath: {{ .Values.volumes.flogoprovisioner.volumePath }}
-              {{- if .Values.volumes.flogoprovisioner.subPath }}
-              subPath: {{ .Values.volumes.flogoprovisioner.subPath }}
-              {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -185,11 +179,8 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.global.flogoprovisioner.logging.enabled }}
       volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: {{ include "flogoprovisioner.storage.pvc.name" . }}
-        {{- if .Values.global.flogoprovisioner.logging.enabled }}
         - name: dockercontainerlogs
             hostPath:
               path: /var/lib/docker/containers/
@@ -199,4 +190,4 @@ spec:
         - name: fluent-bit-config
           configMap:
             name: {{ include "flogoprovisioner.fluentConf" . }}
-        {{- end }}
+      {{- end }}

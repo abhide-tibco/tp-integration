@@ -32,11 +32,6 @@ recipe:
                 meta.helm.sh/release-namespace: ${NAMESPACE}
               enabled: true
               hostsOverride: false
-            volumes:
-              flogoprovisioner:
-                persistentVolumeClaim:
-                  create: true
-                  storageClassName: ${STORAGE_CLASS_NAME}
             config:
               SOURCE_REGISTRY: "664529841144.dkr.ecr.us-west-2.amazonaws.com"
       flags:

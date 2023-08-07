@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "flogoprovisioner.fullname" . -}}
+{{- $fullName := include "o11y-service.fullname" . -}}
 {{- $releaseName := .Release.Name -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
@@ -18,7 +18,7 @@ metadata:
   name: {{ .Values.ingress.className }}-{{ $fullName }}
   labels:
     app.kubernetes.io/component: load-balancer
-    {{- include "flogoprovisioner.labels" . | nindent 4 }}
+    {{- include "o11y-service.labels" . | nindent 4 }}
   annotations:
     ingress.kubernetes.io/rewrite-target: /
     {{- with .Values.ingress.annotations }}
@@ -61,7 +61,7 @@ spec:
             {{- end }}
         {{- else}}
         paths:
-          - path: /tibco/agent/integration/{{ $.Values.global.cp.instanceId }}/flogoprovisioner/
+          - path: /tibco/agent/integration/{{ $.Values.global.cp.instanceId }}/o11y-service/
             pathType: Prefix
             backend:
               service:

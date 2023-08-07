@@ -19,6 +19,7 @@
 
 {{- define "o11y-service.sa" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-sa{{ end -}}
 
+{{- define "o11y-service.fullname" }}o11y-service{{ end -}}
 
 {{/*
     ===========================================================================

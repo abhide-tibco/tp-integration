@@ -116,12 +116,6 @@ extraInitContainers: []
   #   image: busybox
 #   command: ['echo', "hey"]
 
-config:
-  es:
-    LOGSERVER_HOST: ""
-    LOGSERVER_USERNAME: ""
-
-
 image:
   pullPolicy: IfNotPresent
 
@@ -142,6 +136,34 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+config:
+  otel:
+    receiver:
+      service:
+        name: "opentelemetry-operator"
+        port: "8080"
+  logserver:
+    logIndex: "${LOGSERVER_INDEX_NAME}"
+    traceIndex: "${LOGSERVER_TRACE_INDEX_NAME}"
+    proxy:
+      endpoint: "${LOGSERVER_READ_ENDPOINT}"
+      userName: "${LOGSERVER_READ_USERNAME}"
+    exporter:
+      endpoint: "${LOGSERVER_WRITE_ENDPOINT}"
+      userName: "${LOGSERVER_WRITE_USERNAME}"
+  promserver:
+    proxy:
+      endpoint: "${METRICSSERVER_QUERY_ENDPOINT}"
+      userName: "${METRICSSERVER_QUERY_USERNAME}"
+    exporter:
+      endpoint: "${METRICSSERVER_SCRAPE_ENDPOINT}"
 secret:
-  es:
-    LOGSERVER_PASSWORD: ""
+  logserver:
+    proxy:
+      password: "${LOGSERVER_READ_PASSWORD}"
+  promserver:
+    proxy:
+      password: "${METRICSSERVER_READ_PASSWORD}"
+    exporter:
+      token: "${METRICSSERVER_WRITE_TOKEN}"
+

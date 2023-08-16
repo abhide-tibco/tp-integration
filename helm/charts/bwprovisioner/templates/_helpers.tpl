@@ -10,6 +10,8 @@ Create a default fully qualified app name.
 */}}
 {{- define "bwprovisioner.fullname" }}bwprovisioner{{ end -}}
 
+{{- define "bwprovisioner.o11yservice.configmap" }}o11y-service{{ end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}

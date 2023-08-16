@@ -21,6 +21,23 @@
 
 {{- define "o11y-service.fullname" }}o11y-service{{ end -}}
 
+{{- define "o11y-service.otel-receiver-service" }}otel-recvservice-name{{ end -}}
+{{- define "o11y-service.otel-receiver-port" }}otel-recvservice-port{{ end -}}
+{{- define "o11y-service.logserver-logIndex" }}logserver-logIndex{{ end -}}
+{{- define "o11y-service.logserver-traceIndex" }}logserver-traceIndex{{ end -}}
+{{- define "o11y-service.logserver-proxy-endpoint" }}logserver-proxy-endpoint{{ end -}}
+{{- define "o11y-service.logserver-proxy-userName" }}logserver-proxy-userName{{ end -}}
+{{- define "o11y-service.logserver-exporter-endpoint" }}logserver-exporter-endpoint{{ end -}}
+{{- define "o11y-service.logserver-exporter-userName" }}logserver-exporter-userName{{ end -}}
+{{- define "o11y-service.promserver-proxy-endpoint" }}promserver-proxy-endpoint{{ end -}}
+{{- define "o11y-service.promserver-proxy-userName" }}promserver-proxy-userName{{ end -}}
+{{- define "o11y-service.promserver-exporter-endpoint" }}promserver-exporter-endpoint{{ end -}}
+{{- define "o11y-service.logserver-proxy-password" }}logserver-proxy-password{{ end -}}
+{{- define "o11y-service.promserver-proxy-password" }}promserver-proxy-password{{ end -}}
+{{- define "o11y-service.promserver-exporter-token" }}promserver-exporter-token{{ end -}}
+
+
+
 {{/*
     ===========================================================================
     SECTION: labels

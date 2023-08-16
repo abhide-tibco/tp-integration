@@ -82,6 +82,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+#            - name: O11_SERVICE_NAME
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: { { include "bwprovisioner.o11yservice.configmap" . } }
+#                  key: otel-recvservice-name
+#            - name: O11_SERVICE_PORT
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: { { include "bwprovisioner.o11yservice.configmap" . } }
+#                  key: otel-recvservice-port
         {{- if .Values.global.bwprovisioner.deploymanager.enabled }}
         - name: deploymanager
           image: {{ .Values.global.cic.data.SYSTEM_DOCKER_REGISTRY }}/tci/tci-app-proxy:{{ .Values.global.bwprovisioner.deploymanager.image.tag }}

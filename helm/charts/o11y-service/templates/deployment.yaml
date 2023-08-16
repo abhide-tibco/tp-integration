@@ -49,11 +49,25 @@ spec:
             - name: IS_CP
               value: "false"
             #TODO:LOG SERVER PARAMS in Dataplane
-            - name: LOGGING_SEARCH_SERVICE_TYPE
-              value: es
-            - name: LOGGING_SEARCH_SERVICE_ENDPOINT
-              value: https://es-app.eu.aws.watcher.cic2.tibcocloud.com
-            - name: LOGGING_SEARCH_SERVICE_USERNAME
-              value: tci-logwriter
-            - name: LOGGING_SEARCH_SERVICE_PASSWORD
-              value: cccjtjakwp
+#            - name: LOGGING_SEARCH_SERVICE_TYPE
+#              value: es
+#            - name: LOGGING_SEARCH_SERVICE_ENDPOINT
+#              value: https://es-app.eu.aws.watcher.cic2.tibcocloud.com
+#            - name: LOGGING_SEARCH_SERVICE_USERNAME
+#              value: tci-logwriter
+#            - name: LOGGING_SEARCH_SERVICE_PASSWORD
+#              value: cccjtjakwp
+          volumeMounts:
+            - name: o11y-cfgs
+              readOnly: true
+              mountPath: "/o11y/cfgs"
+            - name: o11y-secrets
+              readOnly: true
+              mountPath: "/o11y/secrets"
+      volumes:
+        - name: o11y-cfgs
+          configMap:
+            name: {{ include "o11y-service.fullname" . }}
+        - name: o11y-secrets
+          secret:
+            secretName: {{ include "o11y-service.fullname" . }}

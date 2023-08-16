@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    {{- include "artifactmanager.labels" . | nindent 4 }}
+  name: fluentbit-config-otel
+data:
+  {{ (.Files.Glob "config/otel/fluent-bit.conf").AsConfig | indent 2 }}
+  {{ (.Files.Glob "config/otel/input-tail.conf").AsConfig | indent 2 }}
+  {{ (.Files.Glob "config/otel/parsers.conf").AsConfig | indent 2 }}
+  {{ (.Files.Glob "config/otel/filters.conf").AsConfig | indent 2 }}
+  {{ (.Files.Glob "config/otel/output-otel.conf").AsConfig | indent 2 }}

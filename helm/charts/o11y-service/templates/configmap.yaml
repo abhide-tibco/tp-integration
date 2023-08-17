@@ -7,15 +7,15 @@ metadata:
     {{- include "o11y-service.labels" . | nindent 4 }}
   name: {{ include "o11y-service.fullname" . }}
 data:
-  otel-recvservice-name: {{ .Values.global.config.otel.receiver.service.name }}
-  otel-recvservice-port: {{ .Values.global.config.otel.receiver.service.port }}
-  logserver-logIndex: {{ .Values.global.config.logserver.logIndex }}
-  logserver-traceIndex: {{ .Values.global.config.logserver.traceIndex }}
-  logserver-proxy-endpoint: {{ .Values.global.config.logserver.proxy.endpoint }}
-  logserver-proxy-userName: {{ .Values.global.config.logserver.proxy.userName }}
-  logserver-exporter-endpoint: {{ .Values.global.config.logserver.exporter.endpoint }}
-  logserver-exporter-userName: {{ .Values.global.config.logserver.exporter.userName }}
-  promserver-proxy-endpoint: {{ .Values.global.config.promserver.proxy.endpoint }}
-  promserver-proxy-userName: {{ .Values.global.config.promserver.proxy.userName }}
-  promserver-exporter-endpoint: {{ .Values.global.config.promserver.exporter.endpoint }}
+  otel-recvservice-name: {{ .Values.config.otel.receiver.service.name }}
+  otel-recvservice-port: {{ .Values.config.otel.receiver.service.port }}
+  logserver-logIndex: {{ .Values.config.logserver.logIndex }}
+  logserver-traceIndex: {{ .Values.config.logserver.traceIndex }}
+  logserver-proxy-endpoint: {{ .Values.config.logserver.proxy.endpoint }}
+  logserver-proxy-userName: {{ .Values.config.logserver.proxy.userName }}
+  logserver-exporter-endpoint: {{ .Values.config.logserver.exporter.endpoint }}
+  logserver-exporter-userName: {{ .Values.config.logserver.exporter.userName }}
+  promserver-proxy-endpoint: {{ .Values.config.promserver.proxy.endpoint }}
+  promserver-proxy-userName: {{ .Values.config.promserver.proxy.userName }}
+  promserver-exporter-endpoint: {{ .Values.config.promserver.exporter.endpoint }}
 

@@ -50,6 +50,25 @@
 {{- end -}}
 
 {{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "o11y-service.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "o11y-service.labels" -}}
+helm.sh/chart: {{ include "o11y-service.chart" . }}
+{{ include "o11y-service.shared.labels.selector" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
 Selector labels used by the resources in this chart
 */}}
 {{- define "o11y-service.shared.labels.selector" -}}

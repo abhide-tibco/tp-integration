@@ -19,6 +19,17 @@ recipe:
                 image:
                   registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
                   tag: 112
+            ingress:
+              annotations:
+                haproxy.org/cors-enable: "true"
+                haproxy.org/load-balance: leastconn
+                haproxy.org/src-ip-header: X-Real-IP
+                haproxy.org/timeout-http-request: 600s
+                ingress.kubernetes.io/rewrite-target: /
+                meta.helm.sh/release-name: bwprovisioner
+                meta.helm.sh/release-namespace: ${NAMESPACE}
+              enabled: true
+              hostsOverride: false
       flags:
         install: true
         createNamespace: false

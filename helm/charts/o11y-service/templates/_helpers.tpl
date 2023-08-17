@@ -66,7 +66,7 @@ Includes labels used as selectors (i.e. template "labels.selector")
 */}}
 {{- define "o11y-service.shared.labels.standard" -}}
 {{ include  "o11y-service.shared.labels.selector" . }}
-app.cloud.tibco.com/created-by: {{ include "o11y-service.consts.team" . }}
+app.cloud.tibco.com/created-by: {{ include "o11y-service.consts.appName" . }}
 helm.sh/chart: {{ include "o11y-service.shared.labels.chartLabelValue" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion }}
 {{- end -}}

@@ -55,8 +55,8 @@ Selector labels used by the resources in this chart
 {{- define "o11y-service.shared.labels.selector" -}}
 app.kubernetes.io/name: {{ include "o11y-service.consts.appName" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/part-of: "bwce"
-platform.tibco.com/workload-type: "capability-service"
+app.kubernetes.io/part-of: "o11y"
+platform.tibco.com/workload-type: "infra"
 platform.tibco.com/dataplane-id: {{ .Values.global.cp.dataplaneId }}
 {{- end -}}
 

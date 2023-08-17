@@ -90,5 +90,3 @@ helm.sh/chart: {{ include "o11y-service.shared.labels.chartLabelValue" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion }}
 {{- end -}}
 
-{{- define "o11y-service.role" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-role{{ end -}}
-{{- define "o11y-service.role-bind" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-role-bind{{ end -}}

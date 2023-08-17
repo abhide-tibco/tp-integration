@@ -7,9 +7,4 @@ metadata:
     {{- include "artifactmanager.labels" . | nindent 4 }}
   name: fluentbit-config-otel
 data:
-  test: ""
-#  {{ (.Files.Glob "config/otel/fluent-bit.conf").AsConfig | indent 2 }}
-#  {{ (.Files.Glob "config/otel/input-tail.conf").AsConfig | indent 2 }}
-#  {{ (.Files.Glob "config/otel/parsers.conf").AsConfig | indent 2 }}
-#  {{ (.Files.Glob "config/otel/filters.conf").AsConfig | indent 2 }}
-#  {{ (.Files.Glob "config/otel/output-otel.conf").AsConfig | indent 2 }}
+{{ (.Files.Glob "config/otel/*.conf").AsConfig | indent 2 }}

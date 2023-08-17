@@ -10,7 +10,7 @@ recipe:
       repository:
         git:
           host: https://github.com/sasahoo-tibco/tp-integration.git
-          path: /helm/charts/o11yservice
+          path: /helm/charts/o11y-service
           branch: main
       values:
         - content: |
@@ -37,6 +37,7 @@ recipe:
         isDevTesting: false
 status: deployed
 region: us-west-2
+eula: true
 tags:
   - Tag1
   - Tag2

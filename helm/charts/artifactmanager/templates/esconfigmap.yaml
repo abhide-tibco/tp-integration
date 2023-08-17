@@ -7,8 +7,9 @@ metadata:
     {{- include "artifactmanager.labels" . | nindent 4 }}
   name: fluentbit-config-es
 data:
-  {{ (.Files.Glob "config/es/fluent-bit.conf").AsConfig | indent 2 }}
-  {{ (.Files.Glob "config/es/input-tail.conf").AsConfig | indent 2 }}
-  {{ (.Files.Glob "config/es/parsers.conf").AsConfig | indent 2 }}
-  {{ (.Files.Glob "config/es/filters.conf").AsConfig | indent 2 }}
-  {{ (.Files.Glob "config/es/output-es.conf").AsConfig | indent 2 }}
+  test: ""
+#  {{ (.Files.Glob "config/es/fluent-bit.conf").AsConfig | indent 2 }}
+#  {{ (.Files.Glob "config/es/input-tail.conf").AsConfig | indent 2 }}
+#  {{ (.Files.Glob "config/es/parsers.conf").AsConfig | indent 2 }}
+#  {{ (.Files.Glob "config/es/filters.conf").AsConfig | indent 2 }}
+#  {{ (.Files.Glob "config/es/output-es.conf").AsConfig | indent 2 }}

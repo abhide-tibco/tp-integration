@@ -143,27 +143,27 @@ config:
         name: "opentelemetry-operator"
         port: "8080"
   logserver:
-    logIndex: "${LOGSERVER_INDEX_NAME}"
-    traceIndex: "${LOGSERVER_TRACE_INDEX_NAME}"
+    logIndex: ""
+    traceIndex: ""
     proxy:
-      endpoint: "${LOGSERVER_READ_ENDPOINT}"
-      userName: "${LOGSERVER_READ_USERNAME}"
+      endpoint: ""
+      userName: ""
     exporter:
-      endpoint: "${LOGSERVER_WRITE_ENDPOINT}"
-      userName: "${LOGSERVER_WRITE_USERNAME}"
+      endpoint: ""
+      userName: ""
   promserver:
     proxy:
-      endpoint: "${METRICSSERVER_QUERY_ENDPOINT}"
-      userName: "${METRICSSERVER_QUERY_USERNAME}"
+      endpoint: ""
+      userName: ""
     exporter:
-      endpoint: "${METRICSSERVER_SCRAPE_ENDPOINT}"
+      endpoint: ""
 secret:
   logserver:
     proxy:
-      password: "${LOGSERVER_READ_PASSWORD}"
+      password: ""
   promserver:
     proxy:
-      password: "${METRICSSERVER_READ_PASSWORD}"
+      password: ""
     exporter:
-      token: "${METRICSSERVER_WRITE_TOKEN}"
+      token: ""
 

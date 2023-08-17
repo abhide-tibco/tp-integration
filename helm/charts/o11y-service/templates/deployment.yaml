@@ -27,7 +27,7 @@ spec:
       {{- if .Values.global.o11yservice.serviceAccount }}
       serviceAccountName: {{ .Values.global.o11yservice.serviceAccount }}
       {{- else }}
-      serviceAccountName: {{ include "o11yservice.sa" . }}
+      serviceAccountName: {{ include "o11y-service.sa" . }}
       {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    {{- include "o11y-service.labels" . | nindent 4 }}
+  name: {{ include "o11y-service.fullname" . }}
+data:
+  test: "val"

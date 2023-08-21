@@ -82,12 +82,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-#            - name: O11_SERVICE_NAME
+#            - name: OTEL_SERVICE_NAME
 #              valueFrom:
 #                configMapKeyRef:
 #                  name: { { include "bwprovisioner.o11yservice.configmap" . } }
 #                  key: otel-recvservice-name
-#            - name: O11_SERVICE_PORT
+#            - name: OTEL_SERVICE_PORT
 #              valueFrom:
 #                configMapKeyRef:
 #                  name: { { include "bwprovisioner.o11yservice.configmap" . } }

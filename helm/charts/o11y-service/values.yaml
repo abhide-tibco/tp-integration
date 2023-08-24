@@ -160,10 +160,10 @@ config:
 secret:
   logserver:
     proxy:
-      password: ""
+      password: "logserver_proxy_dummy"
   promserver:
     proxy:
-      password: ""
+      password: "promserver_proxy_dummy"
     exporter:
-      token: ""
+      token: "promserver_exporter_dummy"
 

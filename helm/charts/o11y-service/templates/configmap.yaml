@@ -8,7 +8,7 @@ metadata:
   name: {{ include "o11y-service.fullname" . }}
 data:
   otel-recvservice-name: {{ .Values.config.otel.receiver.service.name }}
-  otel-recvservice-port: {{ .Values.config.otel.receiver.service.port }}
+  otel-recvservice-port: {{ quote .Values.config.otel.receiver.service.port }}
   logserver-logIndex: {{ .Values.config.logserver.logIndex }}
   logserver-traceIndex: {{ .Values.config.logserver.traceIndex }}
   logserver-proxy-endpoint: {{ .Values.config.logserver.proxy.endpoint }}

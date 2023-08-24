@@ -141,7 +141,7 @@ config:
     receiver:
       service:
         name: "opentelemetry-operator"
-        port: "8080"
+        port: 8080
   logserver:
     logIndex: ""
     traceIndex: ""

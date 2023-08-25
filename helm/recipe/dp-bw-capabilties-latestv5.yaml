@@ -71,53 +71,6 @@ recipe:
         install: true
         createNamespace: false
         dependencyUpdate: true
-    - name: apiserver
-      namespace: ${NAMESPACE}
-      repository:
-        git:
-          host: https://github.com/sasahoo-tibco/tp-integration.git
-          path: /helm/charts/apiserver
-          branch: main
-      values:
-        - content: |
-            global:
-              apiserver:
-                data:
-                  namspace: ${NAMESPACE}
-                image:
-                  registry: 664529841144.dkr.ecr.us-west-2.amazonaws.com
-                  tag: 7-m1-ext
-            ingress:
-              annotations:
-                haproxy.org/cors-enable: "true"
-                haproxy.org/load-balance: leastconn
-                haproxy.org/src-ip-header: X-Real-IP
-                haproxy.org/timeout-http-request: 600s
-                ingress.kubernetes.io/rewrite-target: /
-                meta.helm.sh/release-name: apiserver
-                meta.helm.sh/release-namespace: ${NAMESPACE}
-              enabled: true
-              hostsOverride: false
-            ingressExternal:
-              annotations:
-                haproxy.org/cors-enable: "true"
-                haproxy.org/load-balance: leastconn
-                haproxy.org/src-ip-header: X-Real-IP
-                haproxy.org/timeout-http-request: 600s
-                ingress.kubernetes.io/rewrite-target: /
-                meta.helm.sh/release-name: apiserver
-                meta.helm.sh/release-namespace: ${NAMESPACE}
-              enabled: true
-              hosts:
-                - host: ${EXTERNAL_HOST}
-                  paths:
-                  - path: /
-                    pathType: Prefix
-      flags:
-        install: true
-        createNamespace: false
-        dependencyUpdate: true
-        isDevTesting: false
     - name: distributed-lock-operator
       namespace: ${NAMESPACE}
       repository:

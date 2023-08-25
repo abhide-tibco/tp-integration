@@ -48,7 +48,7 @@ Create the name of the service account to use
 {{- if .Values.serviceAccount.create }}
 {{- default (include "artifactmanager.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- tpl .Values.global.bwprovisioner.serviceAccount . }}
+{{- tpl .Values.global.artifactmanager.serviceAccount . }}
 {{- end }}
 {{- end }}
 

@@ -6,6 +6,7 @@ global:
   cp:
     dataplaneId: dp-dp1
     instanceId: defaultinstid
+    namespace: tp-dp-dp1
   o11yservice:
     serviceAccount: ""
     data:
@@ -140,7 +141,7 @@ config:
   otel:
     receiver:
       service:
-        name: "opentelemetry-operator"
+        name: "otel-userapp"
         port: 8080
   logserver:
     logIndex: ""

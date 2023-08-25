@@ -10,6 +10,7 @@ global:
   cp:
     dataplaneId: dp-dp1
     instanceId: defaultinstid
+    namespace: tp-dp-dp1
   apiserver:
     serviceAccount: ""
     data:

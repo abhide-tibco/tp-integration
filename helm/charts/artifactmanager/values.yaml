@@ -11,6 +11,10 @@ global:
   cp:
     dataplaneId: dp-dp1
     instanceId: defaultinstid
+    namespace: tp-dp-dp1
+    resources:
+      storage:
+        storageClassName: "gp2"
   artifactmanager:
     serviceAccount: ""
     data:

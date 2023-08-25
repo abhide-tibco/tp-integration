@@ -48,6 +48,10 @@ spec:
           env:
             - name: IS_CP
               value: "false"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           volumeMounts:
             - name: o11y-cfgs
               readOnly: true

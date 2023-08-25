@@ -21,6 +21,7 @@ metadata:
     {{- include "artifactmanager.labels" . | nindent 4 }}
   annotations:
     ingress.kubernetes.io/rewrite-target: /
+    meta.helm.sh/release-namespace: {{ .Values.global.cp.namespace }}
     {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}

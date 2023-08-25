@@ -29,7 +29,6 @@ recipe:
                 haproxy.org/timeout-http-request: 600s
                 ingress.kubernetes.io/rewrite-target: /
                 meta.helm.sh/release-name: flogoprovisioner
-                meta.helm.sh/release-namespace: ${NAMESPACE}
               enabled: true
               hostsOverride: false
             config:

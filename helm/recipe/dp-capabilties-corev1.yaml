@@ -29,14 +29,12 @@ recipe:
                 haproxy.org/timeout-http-request: 600s
                 ingress.kubernetes.io/rewrite-target: /
                 meta.helm.sh/release-name: artifactmanager
-                meta.helm.sh/release-namespace: ${NAMESPACE}
               enabled: true
               hostsOverride: false
             volumes:
               artifactmanager:
                 persistentVolumeClaim:
                   create: true
-                  storageClassName: ${STORAGE_CLASS_NAME}
       flags:
         install: true
         createNamespace: false

@@ -29,14 +29,12 @@ recipe:
                 haproxy.org/timeout-http-request: 600s
                 ingress.kubernetes.io/rewrite-target: /
                 meta.helm.sh/release-name: bwprovisioner
-                meta.helm.sh/release-namespace: ${NAMESPACE}
               enabled: true
               hostsOverride: false
             volumes:
               bwprovisioner:
                 persistentVolumeClaim:
                   create: true
-                  storageClassName: ${STORAGE_CLASS_NAME}
             config:
               SOURCE_REGISTRY: "664529841144.dkr.ecr.us-west-2.amazonaws.com"
       flags:

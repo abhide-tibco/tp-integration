@@ -14,7 +14,7 @@ spec:
     {{- range .Values.volumes.artifactmanager.persistentVolumeClaim.accessModes }}
     - {{ . }}
     {{- end }}
-  storageClassName: {{ .Values.volumes.artifactmanager.persistentVolumeClaim.storageClassName | quote }}
+  storageClassName: {{ .Values.global.cp.resources.storage.storageClassName | quote }}
   volumeMode: {{ .Values.volumes.artifactmanager.persistentVolumeClaim.volumeMode }}
   {{- with .Values.volumes.artifactmanager.persistentVolumeClaim.resources }}
   resources:

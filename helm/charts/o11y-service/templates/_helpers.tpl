@@ -56,9 +56,6 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{/*
-Create the name of the service account to use
-*/}}
 {{- define "o11y-service.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "o11y-service.fullname" .) .Values.serviceAccount.name }}
@@ -66,7 +63,6 @@ Create the name of the service account to use
 {{- tpl .Values.global.o11y-service.serviceAccount . }}
 {{- end }}
 {{- end }}
-
 
 {{/*
 Common labels
@@ -101,4 +97,3 @@ app.cloud.tibco.com/created-by: {{ include "o11y-service.consts.appName" . }}
 helm.sh/chart: {{ include "o11y-service.shared.labels.chartLabelValue" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion }}
 {{- end -}}
-

@@ -58,7 +58,7 @@ Create chart name and version as used by the chart label.
 
 {{- define "o11y-service.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "o11y-service.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "o11y-service.sa" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- tpl .Values.global.o11yservice.serviceAccount . }}
 {{- end }}

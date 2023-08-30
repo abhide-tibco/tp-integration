@@ -62,7 +62,7 @@ spec:
             {{- end }}
         {{- else}}
         paths:
-          - path: /tibco/agent/integration/{{ $.Values.global.cp.instanceId }}/o11y-service/
+          - path: /tibco/agent/o11y/{{ $.Values.global.cp.instanceId }}/o11y-service/
             pathType: Prefix
             backend:
               service:

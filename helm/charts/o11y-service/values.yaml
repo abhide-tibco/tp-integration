@@ -142,29 +142,54 @@ config:
     receiver:
       service:
         name: "otel-userapp"
-        port: 8080
+        port: 4319
   logserver:
-    logIndex: ""
-    traceIndex: ""
+    userapp:
+      logindex: ""
+      traceindex: ""
+    services:
+      logindex: ""
     proxy:
-      endpoint: ""
-      userName: ""
+      userapp:
+        logindex:
+          endpoint: ""
+          username: ""
     exporter:
-      endpoint: ""
-      userName: ""
+      userapp:
+        logindex:
+          endpoint: ""
+          username: ""
+      services:
+        logindex:
+          endpoint: ""
+          username: ""
   promserver:
     proxy:
       endpoint: ""
-      userName: ""
+      username: ""
     exporter:
       endpoint: ""
+  jaeger:
+    es:
+     host: ""
+     port: 8080
+     username: ""
 secret:
   logserver:
-    proxy:
-      password: "logserver_proxy_dummy"
+    userapp:
+      proxy:
+        password: "logserver_userapp_proxy_dummy"
+      exporter:
+        password: "logserver_userapp_exporter_dummy"
+    services:
+      exporter:
+        password: "logserver_services_exporter_dummy"
   promserver:
     proxy:
       password: "promserver_proxy_dummy"
     exporter:
       token: "promserver_exporter_dummy"
+  jaeger:
+    es:
+     password: "jaeger_es_dummy"
 

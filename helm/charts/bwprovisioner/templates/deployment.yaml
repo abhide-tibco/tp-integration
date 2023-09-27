@@ -25,12 +25,10 @@ spec:
       labels:
         {{- include "bwprovisioner.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- if .Values.global.bwprovisioner.serviceAccount }}
-      serviceAccountName: {{ .Values.global.bwprovisioner.serviceAccount }}
+      - name: {{ .Values.global.cp.containerRegistry.secret }}
+      {{- if .Values.global.cp.resources.serviceaccount.serviceAccountName }}
+      serviceAccountName: {{ .Values.global.cp.resources.serviceaccount.serviceAccountName }}
       {{- else }}
       serviceAccountName: {{ include "bwprovisioner.sa" . }}
       {{- end }}
@@ -41,9 +39,11 @@ spec:
           ports:
             - containerPort: {{ .Values.service.port }}
               name: server
+            - containerPort: {{ .Values.publicApiService.port }}
+              name: publicapiserver
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ .Values.global.bwprovisioner.image.registry }}/piap/bw-provisioner:{{ .Values.global.bwprovisioner.image.tag }}
+          image: {{ include "bwprovisioner.image.registry" .}}{{"/"}}{{ include "bwprovisioner.image.repository" .}}{{"/"}}bw-provisioner:{{ .Values.global.bwprovisioner.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           livenessProbe:
             httpGet:
@@ -74,6 +74,8 @@ spec:
               value: "{{ .Values.global.bwprovisioner.image.tag }}"
             - name: SERVER_PORT
               value: "{{ .Values.service.port }}"
+            - name: PUBLIC_API_SERVER_PORT
+              value: "{{ .Values.publicApiService.port }}"
             - name: CP_DOMAIN
               value: {{ include "bwprovisioner.cp.domain" . }}
             - name: POD_NAMESPACE
@@ -84,41 +86,25 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: IMAGE_PULL_SECRET
+              value: {{ .Values.global.cp.containerRegistry.secret }}
+            - name: APP_INIT_SOURCE_REGISTRY
+              value: {{ include "bwprovisioner.image.registry" .}}{{"/"}}{{ include "bwprovisioner.appinit.image.repository" .}}{{"/"}}
+            - name: SOURCE_REGISTRY
+              value: {{ include "bwprovisioner.image.registry" .}}{{"/"}}{{ include "bwprovisioner.image.repository" .}}{{"/"}}
 #            - name: OTEL_SERVICE_NAME
 #              valueFrom:
 #                configMapKeyRef:
-#                  name: { { include "bwprovisioner.o11yservice.configmap" . } }
+#                  name: {{ include "bwprovisioner.o11yservice.configmap" . }}
 #                  key: otel-recvservice-name
 #            - name: OTEL_SERVICE_PORT
 #              valueFrom:
 #                configMapKeyRef:
-#                  name: { { include "bwprovisioner.o11yservice.configmap" . } }
+#                  name: {{ include "bwprovisioner.o11yservice.configmap" . }}
 #                  key: otel-recvservice-port
-        {{- if .Values.global.bwprovisioner.deploymanager.enabled }}
-        - name: deploymanager
-          image: {{ .Values.global.cic.data.SYSTEM_DOCKER_REGISTRY }}/tci/tci-app-proxy:{{ .Values.global.bwprovisioner.deploymanager.image.tag }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          resources:
-            {{- toYaml .Values.global.bwprovisioner.deploymanager.resources | nindent 12 }}
-          volumeMounts:
-            - name: configs
-              mountPath: /configs
-          env:
-            - name: DEPLOY_MANAGER_SERVICE
-              value: "true"
-            - name: APPS_NAMESPACE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-                  key: APPS_NAMESPACE
-          ports:
-            - containerPort: 7830
-              protocol: TCP
-              name: deploymanager
-        {{- end }}
         {{- if .Values.global.bwprovisioner.logging.enabled }}
         - name: fluent-bit
-          image: {{ .Values.global.bwprovisioner.logging.image.registry }}/tci/fluent-bit:{{ .Values.global.bwprovisioner.logging.image.registry.tag }}
+          image: {{ .Values.global.bwprovisioner.logging.image.registry }}fluent-bit:{{ .Values.global.bwprovisioner.logging.image.tag }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           resources:
             {{- toYaml .Values.global.bwprovisioner.deploymanager.resources | nindent 12 }}

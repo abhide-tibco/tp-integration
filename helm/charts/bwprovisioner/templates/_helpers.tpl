@@ -50,7 +50,7 @@ Create the name of the service account to use
 {{- if .Values.serviceAccount.create }}
 {{- default (include "bwprovisioner.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- tpl .Values.global.bwprovisioner.serviceAccount . }}
+{{- tpl .Values.global.cp.resources.serviceaccount.serviceAccountName . }}
 {{- end }}
 {{- end }}
 
@@ -68,8 +68,56 @@ Integration storage folder pvc name
 {{- include "bwprovisioner.persistentVolumeClaim.claimName" (dict "existingClaim" .Values.volumes.bwprovisioner.existingClaim "releaseName" ( include "bwprovisioner.fullname" . ) "volumeName" "integration" ) -}}
 {{- end -}}
 
-{{- define "bwprovisioner.cp.domain" }}cp-proxy.tibco-dp-{{ .Values.global.cp.dataplaneId }}.svc.cluster.local{{ end -}}
+{{- define "bwprovisioner.cp.domain" }}cp-proxy.{{ .Values.global.cp.resources.serviceaccount.nameSpace }}.svc.cluster.local{{ end -}}
 
 {{- define "bwprovisioner.sa" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-sa{{ end -}}
 {{- define "bwprovisioner.role" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-role{{ end -}}
 {{- define "bwprovisioner.role-bind" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-role-bind{{ end -}}
+
+
+{{- define "bwprovisioner.const.jfrogImageRepo" }}platform/bwce{{end}}
+{{- define "bwprovisioner.const.ecrImageRepo" }}piap{{end}}
+{{- define "bwprovisioner.const.acrImageRepo" }}piap{{end}}
+{{- define "bwprovisioner.const.harborImageRepo" }}piap{{end}}
+{{- define "bwprovisioner.const.defaultImageRepo" }}piap{{end}}
+
+{{- define "bwprovisioner.image.registry" }}
+  {{- .Values.global.cp.containerRegistry.url }}
+{{- end -}}
+ 
+{{/* set repository based on the registry url. We will have different repo for each one. */}}
+{{- define "bwprovisioner.image.repository" -}}
+  {{- if contains "jfrog.io" (include "bwprovisioner.image.registry" .) }}
+    {{- include "bwprovisioner.const.jfrogImageRepo" .}}
+  {{- else if contains "amazonaws.com" (include "bwprovisioner.image.registry" .) }}
+    {{- include "bwprovisioner.const.ecrImageRepo" .}}
+  {{- else if contains "azurecr.io" (include "bwprovisioner.image.registry" .) }}
+    {{- include "bwprovisioner.const.acrImageRepo" .}}
+  {{- else if contains "reldocker.tibco.com" (include "bwprovisioner.image.registry" .) }}
+    {{- include "bwprovisioner.const.harborImageRepo" .}}
+  {{- else }}
+    {{- include "bwprovisioner.const.defaultImageRepo" .}}
+  {{- end }}
+{{- end -}}
+
+
+{{- define "bwprovisioner.appinit.const.jfrogImageRepo" }}platform/integration{{end}}
+{{- define "bwprovisioner.appinit.const.ecrImageRepo" }}piap{{end}}
+{{- define "bwprovisioner.appinit.const.acrImageRepo" }}piap{{end}}
+{{- define "bwprovisioner.appinit.const.harborImageRepo" }}piap{{end}}
+{{- define "bwprovisioner.appinit.const.defaultImageRepo" }}piap{{end}}
+
+{{/* set repository based on the registry url. We will have different repo for each one. */}}
+{{- define "bwprovisioner.appinit.image.repository" -}}
+  {{- if contains "jfrog.io" (include "bwprovisioner.image.registry" .) }}
+    {{- include "bwprovisioner.appinit.const.jfrogImageRepo" .}}
+  {{- else if contains "amazonaws.com" (include "bwprovisioner.image.registry" .) }}
+    {{- include "bwprovisioner.appinit.const.ecrImageRepo" .}}
+  {{- else if contains "azurecr.io" (include "bwprovisioner.image.registry" .) }}
+    {{- include "bwprovisioner.appinit.const.acrImageRepo" .}}
+  {{- else if contains "reldocker.tibco.com" (include "bwprovisioner.image.registry" .) }}
+    {{- include "bwprovisioner.appinit.const.harborImageRepo" .}}
+  {{- else }}
+    {{- include "bwprovisioner.appinit.const.defaultImageRepo" .}}
+  {{- end }}
+{{- end -}}

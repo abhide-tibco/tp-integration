@@ -1,4 +1,4 @@
-{{- if eq .Values.global.bwprovisioner.serviceAccount "" }}
+{{- if eq .Values.global.cp.resources.serviceaccount.serviceAccountName "" }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -38,10 +38,10 @@ metadata:
   name: {{ include "bwprovisioner.role-bind" . }}
 subjects:
   - kind: ServiceAccount
-    {{- if eq .Values.global.bwprovisioner.serviceAccount "" }}
+    {{- if eq .Values.global.cp.resources.serviceaccount.serviceAccountName "" }}
     name: {{ include "bwprovisioner.sa" . }}
     {{- else }}
-    name: {{ .Values.global.bwprovisioner.serviceAccount }}
+    name: {{ .Values.global.cp.resources.serviceaccount.serviceAccountName }}
     {{- end }}
 roleRef:
   kind: Role

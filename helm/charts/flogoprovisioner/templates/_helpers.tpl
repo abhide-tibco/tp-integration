@@ -10,6 +10,8 @@ Create a default fully qualified app name.
 */}}
 {{- define "flogoprovisioner.fullname" }}flogoprovisioner{{ end -}}
 
+{{- define "flogoprovisioner.o11yservice.configmap" }}o11y-service{{ end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -48,7 +50,7 @@ Create the name of the service account to use
 {{- if .Values.serviceAccount.create }}
 {{- default (include "flogoprovisioner.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- tpl .Values.global.flogoprovisioner.serviceAccount . }}
+{{- tpl .Values.global.cp.resources.serviceaccount.serviceAccountName . }}
 {{- end }}
 {{- end }}
 
@@ -66,8 +68,56 @@ Integration storage folder pvc name
 {{- include "flogoprovisioner.persistentVolumeClaim.claimName" (dict "existingClaim" .Values.volumes.flogoprovisioner.existingClaim "releaseName" ( include "flogoprovisioner.fullname" . ) "volumeName" "integration" ) -}}
 {{- end -}}
 
-{{- define "flogoprovisioner.cp.domain" }}cp-proxy.tibco-dp-{{ .Values.global.cp.dataplaneId }}.svc.cluster.local{{ end -}}
+{{- define "flogoprovisioner.cp.domain" }}cp-proxy.{{ .Values.global.cp.resources.serviceaccount.nameSpace }}.svc.cluster.local{{ end -}}
 
 {{- define "flogoprovisioner.sa" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-sa{{ end -}}
 {{- define "flogoprovisioner.role" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-role{{ end -}}
 {{- define "flogoprovisioner.role-bind" }}tp-dp-{{ .Values.global.cp.dataplaneId }}-role-bind{{ end -}}
+
+
+{{- define "flogoprovisioner.const.jfrogImageRepo" }}platform/flogo{{end}}
+{{- define "flogoprovisioner.const.ecrImageRepo" }}piap{{end}}
+{{- define "flogoprovisioner.const.acrImageRepo" }}piap{{end}}
+{{- define "flogoprovisioner.const.harborImageRepo" }}piap{{end}}
+{{- define "flogoprovisioner.const.defaultImageRepo" }}piap{{end}}
+
+{{- define "flogoprovisioner.image.registry" }}
+  {{- .Values.global.cp.containerRegistry.url }}
+{{- end -}}
+ 
+{{/* set repository based on the registry url. We will have different repo for each one. */}}
+{{- define "flogoprovisioner.image.repository" -}}
+  {{- if contains "jfrog.io" (include "flogoprovisioner.image.registry" .) }}
+    {{- include "flogoprovisioner.const.jfrogImageRepo" .}}
+  {{- else if contains "amazonaws.com" (include "flogoprovisioner.image.registry" .) }}
+    {{- include "flogoprovisioner.const.ecrImageRepo" .}}
+  {{- else if contains "azurecr.io" (include "flogoprovisioner.image.registry" .) }}
+    {{- include "flogoprovisioner.const.acrImageRepo" .}}
+  {{- else if contains "reldocker.tibco.com" (include "flogoprovisioner.image.registry" .) }}
+    {{- include "flogoprovisioner.const.harborImageRepo" .}}
+  {{- else }}
+    {{- include "flogoprovisioner.const.defaultImageRepo" .}}
+  {{- end }}
+{{- end -}}
+
+
+{{- define "flogoprovisioner.appinit.const.jfrogImageRepo" }}platform/integration{{end}}
+{{- define "flogoprovisioner.appinit.const.ecrImageRepo" }}piap{{end}}
+{{- define "flogoprovisioner.appinit.const.acrImageRepo" }}piap{{end}}
+{{- define "flogoprovisioner.appinit.const.harborImageRepo" }}piap{{end}}
+{{- define "flogoprovisioner.appinit.const.defaultImageRepo" }}piap{{end}}
+
+{{/* set repository based on the registry url. We will have different repo for each one. */}}
+{{- define "flogoprovisioner.appinit.image.repository" -}}
+  {{- if contains "jfrog.io" (include "flogoprovisioner.image.registry" .) }}
+    {{- include "flogoprovisioner.appinit.const.jfrogImageRepo" .}}
+  {{- else if contains "amazonaws.com" (include "flogoprovisioner.image.registry" .) }}
+    {{- include "flogoprovisioner.appinit.const.ecrImageRepo" .}}
+  {{- else if contains "azurecr.io" (include "flogoprovisioner.image.registry" .) }}
+    {{- include "flogoprovisioner.appinit.const.acrImageRepo" .}}
+  {{- else if contains "reldocker.tibco.com" (include "flogoprovisioner.image.registry" .) }}
+    {{- include "flogoprovisioner.appinit.const.harborImageRepo" .}}
+  {{- else }}
+    {{- include "flogoprovisioner.appinit.const.defaultImageRepo" .}}
+  {{- end }}
+{{- end -}}

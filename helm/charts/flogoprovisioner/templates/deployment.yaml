@@ -25,12 +25,10 @@ spec:
       labels:
         {{- include "flogoprovisioner.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- if .Values.global.flogoprovisioner.serviceAccount }}
-      serviceAccountName: {{ .Values.global.flogoprovisioner.serviceAccount }}
+      - name: {{ .Values.global.cp.containerRegistry.secret }}
+      {{- if .Values.global.cp.resources.serviceaccount.serviceAccountName }}
+      serviceAccountName: {{ .Values.global.cp.resources.serviceaccount.serviceAccountName }}
       {{- else }}
       serviceAccountName: {{ include "flogoprovisioner.sa" . }}
       {{- end }}
@@ -41,10 +39,21 @@ spec:
           ports:
             - containerPort: {{ .Values.service.port }}
               name: server
+            - containerPort: {{ .Values.publicApiService.port }}
+              name: publicapiserver
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ .Values.global.flogoprovisioner.image.registry }}/piap/flogo-provisioner:30
+          image: {{ include "flogoprovisioner.image.registry" .}}{{"/"}}{{ include "flogoprovisioner.image.repository" .}}{{"/"}}flogo-provisioner:{{ .Values.global.flogoprovisioner.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: v1/liveness
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -61,10 +70,12 @@ spec:
               value: {{ .Values.global.cp.dataplaneId }}
             - name: INSTANCE_ID
               value: {{ .Values.global.cp.instanceId }}
+            - name: FLOGO_PROVISIONER_BUILD
+              value: "{{ .Values.global.flogoprovisioner.image.tag }}"
             - name: SERVER_PORT
               value: "{{ .Values.service.port }}"
-            - name: APP_INIT_IMAGE_TAG
-              value: "10-flogo-m1"
+            - name: PUBLIC_API_SERVER_PORT
+              value: "{{ .Values.publicApiService.port }}"
             - name: CP_DOMAIN
               value: {{ include "flogoprovisioner.cp.domain" . }}
             - name: POD_NAMESPACE
@@ -75,31 +86,25 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-        {{- if .Values.global.flogoprovisioner.deploymanager.enabled }}
-        - name: deploymanager
-          image: {{ .Values.global.cic.data.SYSTEM_DOCKER_REGISTRY }}/tci/tci-app-proxy:{{ .Values.global.flogoprovisioner.deploymanager.image.tag }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          resources:
-            {{- toYaml .Values.global.flogoprovisioner.deploymanager.resources | nindent 12 }}
-          volumeMounts:
-            - name: configs
-              mountPath: /configs
-          env:
-            - name: DEPLOY_MANAGER_SERVICE
-              value: "true"
-            - name: APPS_NAMESPACE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-{{ .Chart.Name }}-serviceconfig
-                  key: APPS_NAMESPACE
-          ports:
-            - containerPort: 7830
-              protocol: TCP
-              name: deploymanager
-        {{- end }}
+            - name: IMAGE_PULL_SECRET
+              value: {{ .Values.global.cp.containerRegistry.secret }}
+            - name: APP_INIT_SOURCE_REGISTRY
+              value: {{ include "flogoprovisioner.image.registry" .}}{{"/"}}{{ include "flogoprovisioner.appinit.image.repository" .}}{{"/"}}
+            - name: SOURCE_REGISTRY
+              value: {{ include "flogoprovisioner.image.registry" .}}{{"/"}}{{ include "flogoprovisioner.image.repository" .}}{{"/"}}
+#            - name: OTEL_SERVICE_NAME
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: {{ include "flogoprovisioner.o11yservice.configmap" . }}
+#                  key: otel-recvservice-name
+#            - name: OTEL_SERVICE_PORT
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: {{ include "flogoprovisioner.o11yservice.configmap" . }}
+#                  key: otel-recvservice-port
         {{- if .Values.global.flogoprovisioner.logging.enabled }}
         - name: fluent-bit
-          image: {{ .Values.global.flogoprovisioner.logging.image.registry }}/tci/fluent-bit:{{ .Values.global.flogoprovisioner.logging.image.registry.tag }}
+          image: {{ .Values.global.flogoprovisioner.logging.image.registry }}fluent-bit:{{ .Values.global.flogoprovisioner.logging.image.tag }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           resources:
             {{- toYaml .Values.global.flogoprovisioner.deploymanager.resources | nindent 12 }}

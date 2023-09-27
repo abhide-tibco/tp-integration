@@ -1,0 +1,286 @@
+---
+# Source: flogoprovisioner/templates/rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tp-dp-dp-dp1-sa
+---
+# Source: flogoprovisioner/templates/serviceconfigmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    helm.sh/chart: flogoprovisioner-1.0.8
+    app.kubernetes.io/name: flogoprovisioner
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/part-of: "flogo"
+    platform.tibco.com/workload-type: "capability-service"
+    platform.tibco.com/dataplane-id: dp-dp1
+    platform.tibco.com/capability-instance-id: defaultinstid
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+  name: flogoprovisioner-serviceconfig
+data:
+  APP_INIT_IMAGE_TAG: "13"
+  ARTIFACT_MANAGER_PORT: "7813"
+  DP_INTERNAL_URL: "***NOT AVAILABLE***"
+---
+# Source: flogoprovisioner/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: tp-dp-dp-dp1-role
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get","list","watch","create","delete","patch","update"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get","list","watch","create","delete","patch","update"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get","list","watch","create","delete","patch","update"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get","list","watch","create","delete","patch","update"]
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["get","list","watch","create","delete","patch","update"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get","list","watch","create","delete","patch","update"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get","list","watch","create","delete","patch","update"]
+---
+# Source: flogoprovisioner/templates/rbac.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: tp-dp-dp-dp1-role-bind
+subjects:
+  - kind: ServiceAccount
+    name: tp-dp-dp-dp1-sa
+roleRef:
+  kind: Role
+  name: tp-dp-dp-dp1-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: flogoprovisioner/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: flogoprovisioner
+  labels:
+    helm.sh/chart: flogoprovisioner-1.0.8
+    app.kubernetes.io/name: flogoprovisioner
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/part-of: "flogo"
+    platform.tibco.com/workload-type: "capability-service"
+    platform.tibco.com/dataplane-id: dp-dp1
+    platform.tibco.com/capability-instance-id: defaultinstid
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 7814
+      targetPort: 7814
+      protocol: TCP
+      name: http
+    - port: 7816
+      targetPort: 7816
+      protocol: TCP
+      name: publicapihttp
+  selector:
+    app.kubernetes.io/name: flogoprovisioner
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/part-of: "flogo"
+    platform.tibco.com/workload-type: "capability-service"
+    platform.tibco.com/dataplane-id: dp-dp1
+    platform.tibco.com/capability-instance-id: defaultinstid
+---
+# Source: flogoprovisioner/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flogoprovisioner
+  labels:
+    helm.sh/chart: flogoprovisioner-1.0.8
+    app.kubernetes.io/name: flogoprovisioner
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/part-of: "flogo"
+    platform.tibco.com/workload-type: "capability-service"
+    platform.tibco.com/dataplane-id: dp-dp1
+    platform.tibco.com/capability-instance-id: defaultinstid
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: flogoprovisioner
+      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/part-of: "flogo"
+      platform.tibco.com/workload-type: "capability-service"
+      platform.tibco.com/dataplane-id: dp-dp1
+      platform.tibco.com/capability-instance-id: defaultinstid
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: flogoprovisioner
+        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/part-of: "flogo"
+        platform.tibco.com/workload-type: "capability-service"
+        platform.tibco.com/dataplane-id: dp-dp1
+        platform.tibco.com/capability-instance-id: defaultinstid
+    spec:
+      imagePullSecrets:
+      - name: 
+      serviceAccountName: tp-dp-dp-dp1-sa
+      securityContext:
+        {}
+      containers:
+        - name: flogoprovisioner
+          ports:
+            - containerPort: 7814
+              name: server
+            - containerPort: 7816
+              name: publicapiserver
+          securityContext:
+            {}
+          image: reldocker.tibco.com/piap/flogo-provisioner:38-m1-ext
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: v1/liveness
+              port: 7814
+            initialDelaySeconds: 3
+            failureThreshold: 5
+            periodSeconds: 5
+            timeoutSeconds: 5
+          resources:
+            {}
+          env:
+            - name: APP_INIT_IMAGE_TAG
+              valueFrom:
+                configMapKeyRef:
+                  name: flogoprovisioner-serviceconfig
+                  key: APP_INIT_IMAGE_TAG
+            - name: ARTIFACT_MANAGER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: flogoprovisioner-serviceconfig
+                  key: ARTIFACT_MANAGER_PORT
+            - name: DP_INTERNAL_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: flogoprovisioner-serviceconfig
+                  key: DP_INTERNAL_URL
+            - name: DATAPLANE_ID
+              value: dp-dp1
+            - name: INSTANCE_ID
+              value: defaultinstid
+            - name: FLOGO_PROVISIONER_BUILD
+              value: "38-m1-ext"
+            - name: SERVER_PORT
+              value: "7814"
+            - name: PUBLIC_API_SERVER_PORT
+              value: "7816"
+            - name: CP_DOMAIN
+              value: cp-proxy..svc.cluster.local
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: IMAGE_PULL_SECRET
+              value: 
+            - name: APP_INIT_SOURCE_REGISTRY
+              value: reldocker.tibco.com/piap/
+            - name: SOURCE_REGISTRY
+              value: reldocker.tibco.com/piap/
+#            - name: OTEL_SERVICE_NAME
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: o11y-service
+#                  key: otel-recvservice-name
+#            - name: OTEL_SERVICE_PORT
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: o11y-service
+#                  key: otel-recvservice-port
+---
+# Source: flogoprovisioner/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: haproxy-flogoprovisioner
+  labels:
+    app.kubernetes.io/component: load-balancer
+    helm.sh/chart: flogoprovisioner-1.0.8
+    app.kubernetes.io/name: flogoprovisioner
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/part-of: "flogo"
+    platform.tibco.com/workload-type: "capability-service"
+    platform.tibco.com/dataplane-id: dp-dp1
+    platform.tibco.com/capability-instance-id: defaultinstid
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-namespace: 
+    meta.helm.sh/release-name: flogoprovisioner
+    haproxy.org/cors-enable: "true"
+    haproxy.org/load-balance: leastconn
+    haproxy.org/src-ip-header: X-Real-IP
+    haproxy.org/timeout-http-request: 600s
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: haproxy-dp-dp-dp1
+  rules:
+    - http:
+        paths:
+          - path: /tibco/agent/integration/defaultinstid/flogoprovisioner/
+            pathType: Prefix
+            backend:
+              service:
+                name: flogoprovisioner
+                port:
+                  number: 7814
+---
+# Source: flogoprovisioner/templates/ingress_public_nginx.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Email,X-Forwarded-Access-Token,X-Auth-Request-Access-Token,X-Atmosphere-Token
+    nginx.ingress.kubernetes.io/auth-signin: https://flogo.dp-flogodev.tcie.pro/tibco/flogo/oauth2/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/auth-url: https://flogo.dp-flogodev.tcie.pro/tibco/flogo/oauth2/auth
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 16k
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/x-forwarded-prefix: /tibco/flogo
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  name: flogoprovisioner-public-nginx
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: flogo.dp-flogodev.tcie.pro
+    http:
+      paths:
+      - backend:
+          service:
+            name: flogoprovisioner
+            port:
+              number: 7816
+        path: /tibco/flogo/(.*)
+        pathType: Prefix

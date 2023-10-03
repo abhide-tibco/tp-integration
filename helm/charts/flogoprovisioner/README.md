@@ -1,6 +1,6 @@
-# BWCE Provisioner Helm Chart
+# Flogo Provisioner Helm Chart
 
-This repository hosts the official **[BWCE Provisioner](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bwprovisioner) Helm Charts** for deploying **BW Provisioner** products to [Kubernetes](https://kubernetes.io/)
+This repository hosts the official **[Flogo Provisioner](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/flogoprovisioner) Helm Charts** for deploying **BW Provisioner** products to [Kubernetes](https://kubernetes.io/)
 
 ## Install Helm (only V3 is supported)
 
@@ -8,25 +8,25 @@ Get the latest [Helm release](https://github.com/helm/helm#install).
 
 ## Install Charts
 
-### Add BWCE Provisioner Helm repository
+### Add Flogo Provisioner Helm repository
 
-Before installing BWCE Provisioner helm charts, you need to add the [BWCE Provisioner helm repository](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bwprovisioner) to your helm client.
+Before installing Flogo Provisioner helm charts, you need to add the [Flogo Provisioner helm repository](https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/flogoprovisioner) to your helm client.
 
 ```bash
-helm repo add bwceprovisioner https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/bwprovisioner
+helm repo add Flogoprovisioner https://github.com/sasahoo-tibco/tp-integration/tree/main/helm/charts/flogoprovisioner
 helm repo update
 ```
 ### Install locally with override values
 
 ```bash
-helm upgrade --install bwprovisioner [--namespace <namespace>] --values <new file name>.yaml
+helm upgrade --install flogoprovisioner [--namespace <namespace>] --values <new file name>.yaml
 Or
-helm upgrade --install bwprovisioner [--namespace <namespace>] -f <new file name>.yaml
+helm upgrade --install flogoprovisioner [--namespace <namespace>] -f <new file name>.yaml
 ```
 
 **Note:** For instructions on how to install a chart follow instructions in its _README.md_.
 
-## Contributing to BWCE Provisioner Charts
+## Contributing to Flogo Provisioner Charts
 
 Fork the `repo`, make changes and then please run `helm lint` to lint charts locally, and at least install the chart to see it is working. :)
 
